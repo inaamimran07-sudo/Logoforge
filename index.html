@@ -165,7 +165,8 @@ input[type=color]{width:28px;height:28px;border:none;border-radius:5px;cursor:po
       <div class="pos-opt on" data-pos="below">Below Icon</div>
       <div class="pos-opt" data-pos="above">Above Icon</div>
       <div class="pos-opt" data-pos="right">Right of Icon</div>
-      <div class="pos-opt" data-pos="overlay">On Top</div>
+      <div class="pos-opt" data-pos="centre">Centre of Icon</div>
+      <div class="pos-opt" data-pos="overlay">On Top Strip</div>
     </div>
   </div>
 
@@ -229,12 +230,15 @@ function checkPw() {
   } else {
     document.getElementById('pw-err').style.display = 'block';
     document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
   }
 }
-if (sessionStorage.getItem('unlocked') === '1') {
-  document.getElementById('lock-screen').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
-}
+document.addEventListener('DOMContentLoaded', function() {
+  if (sessionStorage.getItem('unlocked') === '1') {
+    document.getElementById('lock-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+  }
+});
 
 // ===== API KEY =====
 window.onload = () => {
@@ -399,7 +403,30 @@ async function drawLogoCanvas(ctx, imgUrl, brand, tag, fontColor, tagColor, bg, 
     } else if (pos === 'right') {
       iconW = Math.round(dim * 0.45);
       iconH = dim - 120;
-    } else if (pos === 'overlay') {
+    } else if (pos === 'centre') {
+    // Text centred on top of icon
+    const totalTextH = (hasBrand ? brandSize + 10 : 0) + (hasTag ? tagSize + 10 : 0);
+    let textY = (dim - totalTextH) / 2;
+    if (hasBrand) {
+      ctx.font = `800 ${brandSize}px ${fontStack}`;
+      ctx.fillStyle = fontColor;
+      ctx.textAlign = 'center';
+      // Drop shadow for readability
+      ctx.shadowColor = 'rgba(255,255,255,0.9)';
+      ctx.shadowBlur = 18;
+      ctx.fillText(brand, dim / 2, textY + brandSize);
+      ctx.shadowBlur = 0;
+      textY += brandSize + 10;
+    }
+    if (hasTag) {
+      ctx.font = `500 ${tagSize}px ${fontStack}`;
+      ctx.fillStyle = tagColor;
+      ctx.shadowColor = 'rgba(255,255,255,0.9)';
+      ctx.shadowBlur = 12;
+      ctx.fillText(tag, dim / 2, textY + tagSize);
+      ctx.shadowBlur = 0;
+    }
+  } else if (pos === 'overlay') {
       // Full size icon, text on top with semi-transparent backing
     }
   }
@@ -475,6 +502,29 @@ async function drawLogoCanvas(ctx, imgUrl, brand, tag, fontColor, tagColor, bg, 
       ctx.fillStyle = tagColor;
       ctx.textAlign = 'left';
       ctx.fillText(tag, textX, textY + tagSize);
+    }
+  } else if (pos === 'centre') {
+    // Text centred on top of icon
+    const totalTextH = (hasBrand ? brandSize + 10 : 0) + (hasTag ? tagSize + 10 : 0);
+    let textY = (dim - totalTextH) / 2;
+    if (hasBrand) {
+      ctx.font = `800 ${brandSize}px ${fontStack}`;
+      ctx.fillStyle = fontColor;
+      ctx.textAlign = 'center';
+      // Drop shadow for readability
+      ctx.shadowColor = 'rgba(255,255,255,0.9)';
+      ctx.shadowBlur = 18;
+      ctx.fillText(brand, dim / 2, textY + brandSize);
+      ctx.shadowBlur = 0;
+      textY += brandSize + 10;
+    }
+    if (hasTag) {
+      ctx.font = `500 ${tagSize}px ${fontStack}`;
+      ctx.fillStyle = tagColor;
+      ctx.shadowColor = 'rgba(255,255,255,0.9)';
+      ctx.shadowBlur = 12;
+      ctx.fillText(tag, dim / 2, textY + tagSize);
+      ctx.shadowBlur = 0;
     }
   } else if (pos === 'overlay') {
     // Semi-transparent backing strip at bottom
