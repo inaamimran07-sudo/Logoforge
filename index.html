@@ -4,586 +4,686 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>LogoForge</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Playfair+Display:wght@400;700;900&family=Oswald:wght@400;600;700&family=Raleway:wght@300;400;700;800&family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Playfair+Display:wght@700;900&family=Oswald:wght@600;700&family=Raleway:wght@700;800&family=Roboto:wght@700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{background:#0d0d1a;color:#f0f0ff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;padding:24px 16px 60px}
-h1{text-align:center;font-size:28px;font-weight:800;margin-bottom:6px}
-h1 span{color:#6c63ff}
-.sub{text-align:center;color:#7070a0;font-size:13px;margin-bottom:24px}
+body{background:#0d0d1a;color:#f0f0ff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
 
-.key-row{display:flex;gap:8px;margin-bottom:10px}
-.key-row input{flex:1;background:#161628;border:1px solid rgba(255,255,255,0.1);color:#f0f0ff;padding:12px 14px;border-radius:10px;font-size:14px;outline:none;font-family:inherit}
+/* LOCK */
+#lock{position:fixed;inset:0;background:#0d0d1a;z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center}
+#lock h2{font-size:24px;font-weight:800;margin-bottom:6px}
+#lock p{color:#7070a0;font-size:13px;margin-bottom:24px}
+#pw{width:100%;max-width:300px;background:#161628;border:1px solid rgba(255,255,255,0.1);color:#f0f0ff;padding:14px;border-radius:12px;font-size:16px;outline:none;margin-bottom:12px;text-align:center;font-family:inherit;display:block}
+#pw:focus{border-color:#6c63ff}
+.unlock-btn{width:100%;max-width:300px;padding:14px;background:linear-gradient(135deg,#6c63ff,#9b59ff);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit}
+#pw-err{color:#ff6584;font-size:13px;margin-top:10px;display:none}
+
+/* APP */
+#app{display:none;max-width:600px;margin:0 auto;padding:24px 16px 80px}
+.app-title{text-align:center;font-size:26px;font-weight:800;margin-bottom:4px}
+.app-title span{color:#6c63ff}
+.app-sub{text-align:center;color:#7070a0;font-size:12px;margin-bottom:20px}
+
+/* API KEY */
+.key-wrap{background:#161628;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px;margin-bottom:20px}
+.key-wrap-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#7070a0;margin-bottom:10px}
+.key-row{display:flex;gap:8px}
+.key-row input{flex:1;background:#0d0d1a;border:1px solid rgba(255,255,255,0.08);color:#f0f0ff;padding:10px 13px;border-radius:8px;font-size:14px;outline:none;font-family:inherit}
 .key-row input:focus{border-color:#6c63ff}
-.key-save{padding:12px 16px;background:#6c63ff;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit}
-.key-status{text-align:center;font-size:12px;margin-bottom:16px;padding:8px;border-radius:8px}
-.key-status.ok{background:rgba(76,175,80,0.1);color:#4caf50;border:1px solid rgba(76,175,80,0.2)}
-.key-status.no{background:rgba(255,101,132,0.1);color:#ff6584;border:1px solid rgba(255,101,132,0.2)}
+.key-save{padding:10px 16px;background:#6c63ff;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.key-ok{font-size:12px;color:#4caf50;margin-top:8px;display:none}
 
-.card{background:#161628;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px;margin-bottom:12px}
-.card-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#7070a0;margin-bottom:12px}
+/* STEPS */
+.step{background:#161628;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:18px;margin-bottom:14px;display:none}
+.step.active{display:block}
+.step-num{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#6c63ff;margin-bottom:8px}
+.step-title{font-size:17px;font-weight:700;margin-bottom:14px}
 
-textarea{width:100%;background:#0d0d1a;border:1px solid rgba(255,255,255,0.08);color:#f0f0ff;padding:12px;border-radius:10px;font-size:15px;outline:none;font-family:inherit;resize:vertical;min-height:90px;line-height:1.6}
+textarea{width:100%;background:#0d0d1a;border:1px solid rgba(255,255,255,0.08);color:#f0f0ff;padding:12px;border-radius:10px;font-size:15px;outline:none;font-family:inherit;resize:vertical;min-height:100px;line-height:1.6}
 textarea:focus{border-color:#6c63ff}
 input[type=text]{width:100%;background:#0d0d1a;border:1px solid rgba(255,255,255,0.08);color:#f0f0ff;padding:11px 13px;border-radius:10px;font-size:15px;outline:none;font-family:inherit}
 input[type=text]:focus{border-color:#6c63ff}
-select{width:100%;background:#0d0d1a;border:1px solid rgba(255,255,255,0.08);color:#f0f0ff;padding:11px 13px;border-radius:10px;font-size:14px;outline:none;font-family:inherit;-webkit-appearance:none;appearance:none}
-select:focus{border-color:#6c63ff}
-.field{margin-bottom:10px}
-.field label{display:block;font-size:12px;color:#7070a0;margin-bottom:5px;font-weight:500}
 
-.examples{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
-.ex{padding:6px 12px;background:#161628;border:1px solid rgba(255,255,255,0.08);border-radius:20px;font-size:12px;color:#7070a0;cursor:pointer}
-.ex:active{background:rgba(108,99,255,0.15);border-color:#6c63ff;color:#6c63ff}
+.hint{font-size:12px;color:#4a4a70;margin-top:8px;line-height:1.5}
 
-.count-row{display:flex;gap:8px;margin-bottom:16px}
-.cnt{flex:1;padding:11px;background:#161628;border:1px solid rgba(255,255,255,0.08);color:#7070a0;border-radius:10px;text-align:center;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
-.cnt.on{background:#6c63ff;border-color:#6c63ff;color:#fff}
+/* OPTIONS GRID */
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px}
+.opt{padding:9px 15px;border:1px solid rgba(255,255,255,0.08);background:#0d0d1a;color:#a0a0c0;border-radius:10px;cursor:pointer;font-size:13px;font-weight:500;transition:all 0.15s}
+.opt:hover{border-color:rgba(108,99,255,0.5)}
+.opt.on{border-color:#6c63ff;background:rgba(108,99,255,0.15);color:#6c63ff}
+.opt.font-opt{font-size:14px;min-width:120px;text-align:center}
 
-/* TEXT OVERLAY SECTION */
-.text-section{background:rgba(108,99,255,0.07);border:1px solid rgba(108,99,255,0.2);border-radius:14px;padding:16px;margin-bottom:14px}
-.text-section-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#6c63ff;margin-bottom:12px}
-.font-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px}
-.font-opt{padding:10px;border:1px solid rgba(255,255,255,0.08);background:#0d0d1a;color:#f0f0ff;border-radius:8px;cursor:pointer;text-align:center;font-size:14px;transition:all 0.15s}
-.font-opt.on{border-color:#6c63ff;background:rgba(108,99,255,0.15);color:#6c63ff}
-.pos-grid{display:flex;gap:7px;margin-bottom:10px;flex-wrap:wrap}
-.pos-opt{padding:7px 12px;border:1px solid rgba(255,255,255,0.08);background:#0d0d1a;color:#7070a0;border-radius:20px;cursor:pointer;font-size:12px;font-weight:500}
-.pos-opt.on{border-color:#6c63ff;background:rgba(108,99,255,0.15);color:#6c63ff}
-.color-row{display:flex;gap:8px;margin-bottom:10px;align-items:center}
-.color-swatch{display:flex;align-items:center;gap:7px;background:#0d0d1a;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 10px;flex:1}
-input[type=color]{width:28px;height:28px;border:none;border-radius:5px;cursor:pointer;background:none;padding:0}
-.color-swatch span{font-size:12px;color:#7070a0}
-.size-row{display:flex;gap:7px;margin-bottom:10px}
-.size-opt{flex:1;padding:8px;border:1px solid rgba(255,255,255,0.08);background:#0d0d1a;color:#7070a0;border-radius:8px;cursor:pointer;font-size:12px;font-weight:500;text-align:center}
-.size-opt.on{border-color:#6c63ff;background:rgba(108,99,255,0.15);color:#6c63ff}
+/* COLOR ROW */
+.color-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+.color-box{display:flex;align-items:center;gap:8px;background:#0d0d1a;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:9px 12px}
+input[type=color]{width:30px;height:30px;border:none;border-radius:6px;cursor:pointer;background:none;padding:0}
+.color-box span{font-size:12px;color:#7070a0}
 
-.gen-btn{width:100%;padding:16px;background:linear-gradient(135deg,#6c63ff,#9b59ff);color:#fff;border:none;border-radius:14px;font-size:18px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:24px}
-.gen-btn:active{opacity:0.85}
+/* FIELD */
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12px;color:#7070a0;font-weight:600;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px}
+
+/* BUTTONS */
+.next-btn{width:100%;padding:14px;background:linear-gradient(135deg,#6c63ff,#9b59ff);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:14px}
+.next-btn:disabled{opacity:0.4;cursor:not-allowed}
+.back-btn{width:100%;padding:12px;background:transparent;color:#7070a0;border:1px solid rgba(255,255,255,0.08);border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px}
+.gen-btn{width:100%;padding:16px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;border:none;border-radius:12px;font-size:17px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:14px}
 .gen-btn:disabled{opacity:0.4;cursor:not-allowed}
 
-/* RESULTS */
-.result-card{background:#161628;border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;margin-bottom:14px}
-.result-canvas-wrap{width:100%;aspect-ratio:1;background:#fff;position:relative}
-.result-canvas-wrap canvas{width:100%;height:100%;display:block}
-.result-foot{padding:14px}
-.result-num{font-size:12px;color:#7070a0;font-weight:600;margin-bottom:10px}
-.bg-toggle{display:flex;gap:7px;margin-bottom:12px}
-.bg-btn{padding:5px 11px;border:1px solid rgba(255,255,255,0.08);background:#0d0d1a;color:#7070a0;border-radius:20px;font-size:11px;cursor:pointer;font-family:inherit}
-.bg-btn.on{border-color:#6c63ff;color:#6c63ff;background:rgba(108,99,255,0.1)}
-.dl-btn{display:block;width:100%;padding:13px;background:linear-gradient(135deg,#6c63ff,#9b59ff);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;text-align:center;font-family:inherit;margin-bottom:8px}
-.dl-btn-plain{display:block;width:100%;padding:12px;background:#0d0d1a;color:#c0c0e0;border:1px solid rgba(255,255,255,0.1);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-align:center;font-family:inherit}
+/* PROGRESS */
+.progress{display:flex;gap:6px;justify-content:center;margin-bottom:20px}
+.prog-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.1);transition:background 0.2s}
+.prog-dot.on{background:#6c63ff}
+.prog-dot.done{background:#4caf50}
 
-.loading-card{background:#161628;border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;margin-bottom:14px}
-.loading-inner{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
-.spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,0.08);border-top-color:#6c63ff;border-radius:50%;animation:spin 0.7s linear infinite}
+/* GENERATING */
+#generating{display:none;text-align:center;padding:40px 20px;background:#161628;border:1px solid rgba(255,255,255,0.08);border-radius:16px;margin-bottom:14px}
+.spinner{width:44px;height:44px;border:3px solid rgba(255,255,255,0.08);border-top-color:#6c63ff;border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto 14px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading-txt{font-size:13px;color:#7070a0;text-align:center;line-height:1.7}
-.loading-foot{height:180px;background:#0d0d1a;border-top:1px solid rgba(255,255,255,0.05)}
-.err{background:rgba(255,101,132,0.08);border:1px solid rgba(255,101,132,0.2);border-radius:14px;padding:16px;margin-bottom:14px;font-size:13px;color:#ff6584;line-height:1.6}
-.empty{text-align:center;padding:40px 20px;color:#4a4a70;font-size:13px;line-height:1.7}
+#gen-status{font-size:14px;color:#7070a0;line-height:1.7}
 
-/* LOCK */
-#lock-screen{position:fixed;inset:0;background:#0d0d1a;z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px}
+/* RESULTS */
+#results{display:none}
+.result-card{background:#161628;border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;margin-bottom:16px}
+.result-img-wrap{width:100%;background:#fff;position:relative;overflow:hidden}
+.result-img-wrap img{width:100%;display:block}
+.text-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+.text-overlay.pos-below{justify-content:flex-end;padding-bottom:24px}
+.text-overlay.pos-above{justify-content:flex-start;padding-top:24px}
+.text-overlay.pos-right{align-items:flex-end;padding-right:24px}
+.overlay-brand{font-weight:800;line-height:1.1;text-align:center}
+.overlay-tag{font-weight:500;margin-top:4px;text-align:center;opacity:0.85}
+
+.result-foot{padding:14px}
+.result-foot-title{font-size:12px;color:#7070a0;font-weight:600;margin-bottom:12px}
+.dl-row{display:flex;gap:8px}
+.dl-btn{flex:1;padding:12px;background:linear-gradient(135deg,#6c63ff,#9b59ff);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;text-align:center}
+.dl-btn-plain{flex:1;padding:12px;background:#0d0d1a;color:#c0c0e0;border:1px solid rgba(255,255,255,0.1);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+
+.new-btn{width:100%;padding:14px;background:#161628;color:#6c63ff;border:1px solid rgba(108,99,255,0.3);border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:6px}
+
+/* ERR */
+.err-box{background:rgba(255,101,132,0.08);border:1px solid rgba(255,101,132,0.2);border-radius:12px;padding:14px;margin-bottom:14px;font-size:13px;color:#ff6584;line-height:1.6;display:none}
+
+/* HISTORY */
+#history-section{margin-top:30px;display:none}
+.history-title{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#7070a0;margin-bottom:12px}
+.history-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.history-thumb{border-radius:10px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:border-color 0.15s;aspect-ratio:1;background:#fff}
+.history-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.history-thumb:hover{border-color:#6c63ff}
+
+/* BG PREVIEW TOGGLE */
+.bg-row{display:flex;gap:7px;margin-top:10px}
+.bg-dot{width:26px;height:26px;border-radius:6px;cursor:pointer;border:2px solid transparent;transition:border-color 0.15s}
+.bg-dot.on{border-color:#6c63ff}
 </style>
 </head>
 <body>
 
-<!-- PASSWORD SCREEN -->
-<div id="lock-screen">
-  <div style="font-size:48px;margin-bottom:16px">🔒</div>
-  <h2 style="font-size:22px;font-weight:800;margin-bottom:6px">LogoForge</h2>
-  <p style="color:#7070a0;font-size:13px;margin-bottom:28px">Private access only</p>
-  <input type="password" id="pw-input" placeholder="Enter password"
-    onkeydown="if(event.key==='Enter')checkPw()"
-    style="width:100%;max-width:320px;background:#161628;border:1px solid rgba(255,255,255,0.1);color:#f0f0ff;padding:14px 16px;border-radius:12px;font-size:16px;outline:none;margin-bottom:12px;text-align:center;font-family:inherit" />
-  <button onclick="checkPw()"
-    style="width:100%;max-width:320px;padding:14px;background:linear-gradient(135deg,#6c63ff,#9b59ff);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit">
-    Unlock
-  </button>
-  <p id="pw-err" style="color:#ff6584;font-size:13px;margin-top:12px;display:none">Incorrect password. Try again.</p>
+<!-- LOCK -->
+<div id="lock">
+  <div style="font-size:48px;margin-bottom:14px">🔒</div>
+  <h2>LogoForge</h2>
+  <p>Private access only</p>
+  <input type="password" id="pw" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkPw()" />
+  <button class="unlock-btn" onclick="checkPw()">Unlock</button>
+  <p id="pw-err">Wrong password. Try again.</p>
 </div>
 
-<div id="app" style="display:none">
+<!-- APP -->
+<div id="app">
+  <div class="app-title">Logo<span>Forge</span></div>
+  <p class="app-sub">AI Logo Generator — DALL-E 3</p>
 
-<h1>Logo<span>Forge</span></h1>
-<p class="sub">AI Logo Generator — DALL-E 3</p>
-
-<!-- API KEY -->
-<div class="key-row">
-  <input type="password" id="key-input" placeholder="OpenAI API key (sk-...)" />
-  <button class="key-save" onclick="saveKey()">Save</button>
-</div>
-<div class="key-status no" id="key-status">🔑 No API key saved</div>
-
-<!-- PROMPT -->
-<div class="card">
-  <div class="card-title">Describe Your Logo</div>
-  <textarea id="prompt" placeholder="e.g. A plumbing company called Apex Plumbing. Blue and orange, bold and professional."></textarea>
-  <div style="font-size:12px;color:#4a4a70;margin-top:8px">Describe the company, industry, colours, and style you want.</div>
-</div>
-
-<!-- EXAMPLES -->
-<div style="font-size:11px;color:#7070a0;margin-bottom:8px;font-weight:600">Tap an example</div>
-<div class="examples">
-  <div class="ex" onclick="setEx(this)">Plumbing company, blue & orange, bold</div>
-  <div class="ex" onclick="setEx(this)">Electrician, yellow & black, strong modern</div>
-  <div class="ex" onclick="setEx(this)">Luxury hair salon, gold & black, elegant</div>
-  <div class="ex" onclick="setEx(this)">Tech startup, purple & white, futuristic</div>
-  <div class="ex" onclick="setEx(this)">Fitness gym, red & dark grey, powerful</div>
-  <div class="ex" onclick="setEx(this)">Restaurant, warm red & cream, friendly</div>
-</div>
-
-<!-- TEXT OVERLAY -->
-<div class="text-section">
-  <div class="text-section-title">✏️ Add Text to Your Logo</div>
-
-  <div class="field">
-    <label>Brand Name (shown on logo)</label>
-    <input type="text" id="txt-brand" placeholder="e.g. Apex Plumbing" />
-  </div>
-
-  <div class="field">
-    <label>Tagline (optional, smaller text)</label>
-    <input type="text" id="txt-tag" placeholder="e.g. Fast & Reliable" />
-  </div>
-
-  <div class="field">
-    <label>Font Style</label>
-    <div class="font-grid" id="font-grid">
-      <div class="font-opt on" data-font="Montserrat" style="font-family:'Montserrat',sans-serif;font-weight:700">Montserrat</div>
-      <div class="font-opt" data-font="Playfair Display" style="font-family:'Playfair Display',serif">Playfair</div>
-      <div class="font-opt" data-font="Oswald" style="font-family:'Oswald',sans-serif;font-weight:600">Oswald</div>
-      <div class="font-opt" data-font="Raleway" style="font-family:'Raleway',sans-serif;font-weight:700">Raleway</div>
-      <div class="font-opt" data-font="Roboto" style="font-family:'Roboto',sans-serif;font-weight:700">Roboto</div>
-      <div class="font-opt" data-font="Arial" style="font-family:Arial,sans-serif;font-weight:700">Arial Bold</div>
+  <!-- API KEY -->
+  <div class="key-wrap">
+    <div class="key-wrap-title">OpenAI API Key</div>
+    <div class="key-row">
+      <input type="password" id="key-input" placeholder="sk-..." />
+      <button class="key-save" onclick="saveKey()">Save</button>
     </div>
+    <div class="key-ok" id="key-ok">✅ Key saved</div>
   </div>
 
-  <div class="field">
-    <label>Text Position</label>
-    <div class="pos-grid" id="pos-grid">
-      <div class="pos-opt on" data-pos="below">Below Icon</div>
-      <div class="pos-opt" data-pos="above">Above Icon</div>
-      <div class="pos-opt" data-pos="right">Right of Icon</div>
-      <div class="pos-opt" data-pos="centre">Centre of Icon</div>
-      <div class="pos-opt" data-pos="overlay">On Top Strip</div>
-    </div>
+  <!-- PROGRESS DOTS -->
+  <div class="progress" id="progress">
+    <div class="prog-dot on" id="dot0"></div>
+    <div class="prog-dot" id="dot1"></div>
+    <div class="prog-dot" id="dot2"></div>
+    <div class="prog-dot" id="dot3"></div>
   </div>
 
-  <div class="field">
-    <label>Text Size</label>
-    <div class="size-row" id="size-row">
-      <div class="size-opt" data-s="small">Small</div>
-      <div class="size-opt on" data-s="medium">Medium</div>
-      <div class="size-opt" data-s="large">Large</div>
-      <div class="size-opt" data-s="xlarge">X-Large</div>
-    </div>
+  <!-- STEP 1: DESCRIBE -->
+  <div class="step active" id="step0">
+    <div class="step-num">Step 1 of 4</div>
+    <div class="step-title">Describe your logo</div>
+    <textarea id="prompt" placeholder="e.g. A plumbing company called Apex Plumbing. Blue and orange colours, bold and professional feel."></textarea>
+    <div class="hint">Describe the business, industry, colours, and style you want. The more detail, the better.</div>
+    <button class="next-btn" onclick="goStep(1)">Next →</button>
   </div>
 
-  <div class="field">
-    <label>Text Colour</label>
-    <div class="color-row">
-      <div class="color-swatch">
-        <input type="color" id="txt-color" value="#1a1a2e" />
-        <span>Brand name</span>
-      </div>
-      <div class="color-swatch">
-        <input type="color" id="tag-color" value="#666688" />
-        <span>Tagline</span>
+  <!-- STEP 2: STYLE + TYPE -->
+  <div class="step" id="step1">
+    <div class="step-num">Step 2 of 4</div>
+    <div class="step-title">Choose a style</div>
+
+    <div class="field">
+      <label>Logo Style</label>
+      <div class="opts" id="style-opts">
+        <div class="opt on" data-v="modern minimal clean">Modern Minimal</div>
+        <div class="opt" data-v="bold industrial strong">Bold & Strong</div>
+        <div class="opt" data-v="luxury premium elegant">Luxury</div>
+        <div class="opt" data-v="playful fun colorful">Playful</div>
+        <div class="opt" data-v="vintage retro classic">Vintage Retro</div>
+        <div class="opt" data-v="tech futuristic neon">Tech Future</div>
+        <div class="opt" data-v="organic natural earthy">Organic</div>
+        <div class="opt" data-v="geometric abstract sharp">Geometric</div>
       </div>
     </div>
-  </div>
 
-  <div class="field">
-    <label>Canvas Background</label>
-    <div class="bg-toggle" id="canvas-bg-toggle">
-      <button class="bg-btn on" data-bg="white">White</button>
-      <button class="bg-btn" data-bg="black">Black</button>
-      <button class="bg-btn" data-bg="transparent">Clear</button>
+    <div class="field">
+      <label>Logo Type</label>
+      <div class="opts" id="type-opts">
+        <div class="opt on" data-v="icon symbol only no text no words">Icon / Symbol</div>
+        <div class="opt" data-v="badge emblem crest shield">Badge / Emblem</div>
+        <div class="opt" data-v="monogram large initials letters">Monogram</div>
+        <div class="opt" data-v="abstract geometric shape">Abstract</div>
+        <div class="opt" data-v="mascot character illustration">Mascot</div>
+      </div>
     </div>
+
+    <div class="field">
+      <label>Number of logos</label>
+      <div class="opts" id="count-opts">
+        <div class="opt on" data-n="1">1</div>
+        <div class="opt" data-n="2">2</div>
+        <div class="opt" data-n="3">3</div>
+      </div>
+    </div>
+
+    <button class="next-btn" onclick="goStep(2)">Next →</button>
+    <button class="back-btn" onclick="goStep(0)">← Back</button>
   </div>
+
+  <!-- STEP 3: TEXT -->
+  <div class="step" id="step2">
+    <div class="step-num">Step 3 of 4</div>
+    <div class="step-title">Add text to your logo</div>
+
+    <div class="field">
+      <label>Brand Name</label>
+      <input type="text" id="txt-brand" placeholder="e.g. Apex Plumbing" />
+    </div>
+
+    <div class="field">
+      <label>Tagline (optional)</label>
+      <input type="text" id="txt-tag" placeholder="e.g. Fast & Reliable" />
+    </div>
+
+    <div class="field">
+      <label>Font</label>
+      <div class="opts" id="font-opts">
+        <div class="opt font-opt on" data-f="Montserrat" style="font-family:'Montserrat',sans-serif;font-weight:800">Montserrat</div>
+        <div class="opt font-opt" data-f="Playfair Display" style="font-family:'Playfair Display',serif;font-weight:700">Playfair</div>
+        <div class="opt font-opt" data-f="Oswald" style="font-family:'Oswald',sans-serif;font-weight:700">Oswald</div>
+        <div class="opt font-opt" data-f="Raleway" style="font-family:'Raleway',sans-serif;font-weight:800">Raleway</div>
+        <div class="opt font-opt" data-f="Roboto" style="font-family:'Roboto',sans-serif;font-weight:700">Roboto</div>
+        <div class="opt font-opt" data-f="Arial" style="font-family:Arial,sans-serif;font-weight:700">Arial</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Text Position</label>
+      <div class="opts" id="pos-opts">
+        <div class="opt on" data-p="below">Below Icon</div>
+        <div class="opt" data-p="above">Above Icon</div>
+        <div class="opt" data-p="right">Right of Icon</div>
+        <div class="opt" data-p="centre">Centre</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Text Size</label>
+      <div class="opts" id="size-opts">
+        <div class="opt" data-s="40">Small</div>
+        <div class="opt on" data-s="58">Medium</div>
+        <div class="opt" data-s="76">Large</div>
+        <div class="opt" data-s="96">X-Large</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Text Colour</label>
+      <div class="color-row">
+        <div class="color-box">
+          <input type="color" id="brand-color" value="#111122" />
+          <span>Brand name</span>
+        </div>
+        <div class="color-box">
+          <input type="color" id="tag-color" value="#666688" />
+          <span>Tagline</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="next-btn" onclick="goStep(3)">Next →</button>
+    <button class="back-btn" onclick="goStep(1)">← Back</button>
+  </div>
+
+  <!-- STEP 4: CONFIRM -->
+  <div class="step" id="step3">
+    <div class="step-num">Step 4 of 4</div>
+    <div class="step-title">Ready to generate</div>
+    <div id="summary" style="background:#0d0d1a;border-radius:10px;padding:14px;font-size:13px;color:#a0a0c0;line-height:1.8;margin-bottom:4px"></div>
+    <button class="gen-btn" id="gen-btn" onclick="generate()">⚡ Generate Logo</button>
+    <button class="back-btn" onclick="goStep(2)">← Back</button>
+  </div>
+
+  <!-- GENERATING -->
+  <div id="generating">
+    <div class="spinner"></div>
+    <div id="gen-status">Sending to DALL-E 3…<br><span style="font-size:11px;color:#4a4a70">Takes about 15–20 seconds per logo</span></div>
+  </div>
+
+  <!-- ERROR -->
+  <div class="err-box" id="err-box"></div>
+
+  <!-- RESULTS -->
+  <div id="results"></div>
+
+  <!-- HISTORY -->
+  <div id="history-section">
+    <div class="history-title">📁 All Generated Logos</div>
+    <div class="history-grid" id="history-grid"></div>
+  </div>
+
 </div>
-
-<!-- COUNT -->
-<div style="font-size:11px;color:#7070a0;margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:1px">Number of Logos</div>
-<div class="count-row" id="counts">
-  <button class="cnt on" data-n="1">1</button>
-  <button class="cnt" data-n="2">2</button>
-  <button class="cnt" data-n="3">3</button>
-</div>
-
-<button class="gen-btn" id="genbtn" onclick="generate()">⚡ Generate Logo</button>
-
-<div id="output">
-  <div class="empty">Your logos will appear here.<br>Each one takes about 15–20 seconds.</div>
-</div>
-
-</div><!-- end #app -->
 
 <script>
-// ===== PASSWORD =====
+// ===== LOCK =====
+document.addEventListener('DOMContentLoaded', () => {
+  if (sessionStorage.getItem('lf_unlocked') === '1') unlock();
+});
 function checkPw() {
-  if (document.getElementById('pw-input').value === 'Atg9341poL') {
-    document.getElementById('lock-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    sessionStorage.setItem('unlocked', '1');
+  if (document.getElementById('pw').value === 'Atg9341poL') {
+    unlock();
+    sessionStorage.setItem('lf_unlocked', '1');
   } else {
     document.getElementById('pw-err').style.display = 'block';
-    document.getElementById('pw-input').value = '';
-    document.getElementById('pw-input').focus();
+    document.getElementById('pw').value = '';
   }
 }
-document.addEventListener('DOMContentLoaded', function() {
-  if (sessionStorage.getItem('unlocked') === '1') {
-    document.getElementById('lock-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-  }
-});
+function unlock() {
+  document.getElementById('lock').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+}
 
-// ===== API KEY =====
-window.onload = () => {
-  const k = localStorage.getItem('oai_key') || '';
-  if (k) { document.getElementById('key-input').value = k; setKeyStatus(true); }
-};
+// ===== KEY =====
+document.addEventListener('DOMContentLoaded', () => {
+  const k = localStorage.getItem('lf_key') || '';
+  if (k) { document.getElementById('key-input').value = k; showKeyOk(); }
+});
 function saveKey() {
   const k = document.getElementById('key-input').value.trim();
   if (!k) return;
-  localStorage.setItem('oai_key', k);
-  setKeyStatus(true);
+  localStorage.setItem('lf_key', k);
+  showKeyOk();
 }
-function setKeyStatus(ok) {
-  const el = document.getElementById('key-status');
-  el.className = 'key-status ' + (ok ? 'ok' : 'no');
-  el.textContent = ok ? '✅ API key saved — ready to generate' : '🔑 No API key — paste yours above';
-}
+function showKeyOk() { document.getElementById('key-ok').style.display = 'block'; }
+function getKey() { return localStorage.getItem('lf_key') || ''; }
 
-// ===== SELECTIONS =====
+// ===== STATE =====
+let curStep = 0;
+let selStyle = 'modern minimal clean';
+let selType = 'icon symbol only no text no words';
 let selCount = 1;
 let selFont = 'Montserrat';
 let selPos = 'below';
-let selSize = 'medium';
-let canvasBg = 'white';
+let selSize = 58;
+let history = [];
 
-function setEx(el) { document.getElementById('prompt').value = el.textContent; }
+// Option selectors
+function makeSelector(groupId, stateKey) {
+  document.getElementById(groupId).addEventListener('click', e => {
+    const t = e.target.closest('.opt'); if (!t) return;
+    document.querySelectorAll('#' + groupId + ' .opt').forEach(o => o.classList.remove('on'));
+    t.classList.add('on');
+    if (stateKey === 'style') selStyle = t.dataset.v;
+    if (stateKey === 'type') selType = t.dataset.v;
+    if (stateKey === 'count') selCount = parseInt(t.dataset.n);
+    if (stateKey === 'font') selFont = t.dataset.f;
+    if (stateKey === 'pos') selPos = t.dataset.p;
+    if (stateKey === 'size') selSize = parseInt(t.dataset.s);
+  });
+}
+makeSelector('style-opts', 'style');
+makeSelector('type-opts', 'type');
+makeSelector('count-opts', 'count');
+makeSelector('font-opts', 'font');
+makeSelector('pos-opts', 'pos');
+makeSelector('size-opts', 'size');
 
-document.getElementById('font-grid').addEventListener('click', e => {
-  const t = e.target.closest('.font-opt'); if (!t) return;
-  document.querySelectorAll('.font-opt').forEach(x => x.classList.remove('on'));
-  t.classList.add('on'); selFont = t.dataset.font;
-});
-document.getElementById('pos-grid').addEventListener('click', e => {
-  const t = e.target.closest('.pos-opt'); if (!t) return;
-  document.querySelectorAll('.pos-opt').forEach(x => x.classList.remove('on'));
-  t.classList.add('on'); selPos = t.dataset.pos;
-});
-document.getElementById('size-row').addEventListener('click', e => {
-  const t = e.target.closest('.size-opt'); if (!t) return;
-  document.querySelectorAll('.size-opt').forEach(x => x.classList.remove('on'));
-  t.classList.add('on'); selSize = t.dataset.s;
-});
-document.getElementById('canvas-bg-toggle').addEventListener('click', e => {
-  const t = e.target.closest('.bg-btn'); if (!t) return;
-  document.querySelectorAll('#canvas-bg-toggle .bg-btn').forEach(x => x.classList.remove('on'));
-  t.classList.add('on'); canvasBg = t.dataset.bg;
-});
-document.getElementById('counts').addEventListener('click', e => {
-  const t = e.target.closest('.cnt'); if (!t) return;
-  document.querySelectorAll('.cnt').forEach(x => x.classList.remove('on'));
-  t.classList.add('on'); selCount = parseInt(t.dataset.n);
-  document.getElementById('genbtn').textContent = `⚡ Generate ${selCount > 1 ? selCount + ' Logos' : 'Logo'}`;
-});
+// ===== STEPS =====
+function goStep(n) {
+  if (n === 1 && !document.getElementById('prompt').value.trim()) {
+    alert('Please describe your logo first.'); return;
+  }
+  if (n === 3) buildSummary();
+  curStep = n;
+  document.querySelectorAll('.step').forEach((s, i) => {
+    s.classList.toggle('active', i === n);
+  });
+  for (let i = 0; i < 4; i++) {
+    const d = document.getElementById('dot' + i);
+    d.className = 'prog-dot' + (i < n ? ' done' : i === n ? ' on' : '');
+  }
+  window.scrollTo(0, 0);
+}
 
-// ===== PROMPT =====
-function buildPrompt(userText, i) {
-  const vars = ['clean and refined', 'bold and striking', 'creative and unique'];
-  return `Professional logo icon for: ${userText}. ${vars[i % 3]} design. Pure white background. High quality flat vector graphic style. No text, no words, no letters — icon and symbol only. Simple, clean, scalable, memorable. The kind of professional logo a top branding agency would create. Centered on white background with padding.`;
+function buildSummary() {
+  const brand = document.getElementById('txt-brand').value.trim();
+  const tag = document.getElementById('txt-tag').value.trim();
+  document.getElementById('summary').innerHTML = `
+    <b style="color:#f0f0ff">Logo description:</b> ${document.getElementById('prompt').value.trim()}<br>
+    <b style="color:#f0f0ff">Style:</b> ${selStyle} &nbsp;|&nbsp; <b style="color:#f0f0ff">Type:</b> ${selType.split(' ')[0]}<br>
+    <b style="color:#f0f0ff">Logos:</b> ${selCount}<br>
+    ${brand ? `<b style="color:#f0f0ff">Brand name:</b> ${brand}${tag ? ' — ' + tag : ''}<br>` : ''}
+    <b style="color:#f0f0ff">Font:</b> ${selFont} &nbsp;|&nbsp; <b style="color:#f0f0ff">Position:</b> ${selPos} &nbsp;|&nbsp; <b style="color:#f0f0ff">Size:</b> ${selSize}px
+  `;
 }
 
 // ===== GENERATE =====
 async function generate() {
-  const userText = document.getElementById('prompt').value.trim();
-  if (!userText) { alert('Please describe what logo you want.'); return; }
-  const key = localStorage.getItem('oai_key') || '';
-  if (!key) { alert('Please paste your OpenAI API key at the top and tap Save.'); return; }
+  const key = getKey();
+  if (!key) { alert('Please save your OpenAI API key first.'); return; }
 
-  const btn = document.getElementById('genbtn');
-  btn.disabled = true; btn.textContent = 'Generating…';
-  document.getElementById('output').innerHTML = '';
+  const promptText = document.getElementById('prompt').value.trim();
+  const brand = document.getElementById('txt-brand').value.trim();
+  const tag = document.getElementById('txt-tag').value.trim();
+  const brandColor = document.getElementById('brand-color').value;
+  const tagColor = document.getElementById('tag-color').value;
+
+  // Hide steps, show generating
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('progress').style.display = 'none';
+  document.getElementById('generating').style.display = 'block';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('err-box').style.display = 'none';
+
+  const urls = [];
+  const variations = ['clean and refined','bold and striking','creative and unique'];
 
   for (let i = 0; i < selCount; i++) {
-    const lc = makeLoadCard(i + 1);
-    document.getElementById('output').appendChild(lc);
+    document.getElementById('gen-status').innerHTML =
+      `Generating logo ${i+1} of ${selCount}…<br><span style="font-size:11px;color:#4a4a70">Takes about 15–20 seconds</span>`;
+
+    const p = `Professional logo for: ${promptText}. Style: ${selStyle}. Type: ${selType}. ${variations[i%3]} design. Pure white background. High quality flat vector graphic. No text, no words in the image — icon only. Clean, scalable, memorable, professional.`;
+
     try {
       const res = await fetch('https://api.openai.com/v1/images/generations', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key },
-        body: JSON.stringify({
-          model: 'dall-e-3',
-          prompt: buildPrompt(userText, i),
-          n: 1,
-          size: '1024x1024',
-          quality: 'hd',
-          style: 'vivid'
-        })
+        body: JSON.stringify({ model: 'dall-e-3', prompt: p, n: 1, size: '1024x1024', quality: 'hd', style: 'vivid' })
       });
       const data = await res.json();
       if (data.error) throw new Error(data.error.message);
-      await buildResultCard(lc, data.data[0].url, i);
-    } catch (e) {
-      replaceWithError(lc, e.message);
-    }
-  }
-  btn.disabled = false;
-  btn.textContent = `⚡ Generate ${selCount > 1 ? selCount + ' Logos' : 'Logo'}`;
-}
-
-// ===== CANVAS TEXT OVERLAY =====
-async function buildResultCard(lc, imgUrl, idx) {
-  const brandText = document.getElementById('txt-brand').value.trim();
-  const tagText = document.getElementById('txt-tag').value.trim();
-  const fontColor = document.getElementById('txt-color').value;
-  const tagColor = document.getElementById('tag-color').value;
-
-  const card = document.createElement('div');
-  card.className = 'result-card';
-
-  const wrap = document.createElement('div');
-  wrap.className = 'result-canvas-wrap';
-
-  const canvas = document.createElement('canvas');
-  canvas.width = 1200;
-  canvas.height = 1200;
-  wrap.appendChild(canvas);
-
-  const foot = document.createElement('div');
-  foot.className = 'result-foot';
-  foot.innerHTML = `
-    <div class="result-num">Logo ${idx + 1}</div>
-    <div class="dl-btn" style="cursor:pointer" onclick="downloadCanvas(this,'logo-${idx+1}')">⬇ Download High-Res PNG (1200×1200)</div>
-    <div class="dl-btn-plain" style="cursor:pointer" onclick="downloadCanvasJPG(this,'logo-${idx+1}')">⬇ Download JPG</div>`;
-
-  card.appendChild(wrap);
-  card.appendChild(foot);
-  lc.replaceWith(card);
-
-  // Draw on canvas
-  const ctx = canvas.getContext('2d');
-  await drawLogoCanvas(ctx, imgUrl, brandText, tagText, fontColor, tagColor, canvasBg, selFont, selPos, selSize, 1200);
-}
-
-async function drawLogoCanvas(ctx, imgUrl, brand, tag, fontColor, tagColor, bg, font, pos, size, dim) {
-  // Background
-  if (bg === 'white') { ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, dim, dim); }
-  else if (bg === 'black') { ctx.fillStyle = '#111111'; ctx.fillRect(0, 0, dim, dim); }
-  else { ctx.clearRect(0, 0, dim, dim); }
-
-  const hasBrand = brand.length > 0;
-  const hasTag = tag.length > 0;
-  const hasText = hasBrand || hasTag;
-
-  // Font sizes based on selection
-  const sizeMap = { small: 52, medium: 72, large: 92, xlarge: 118 };
-  const brandSize = sizeMap[size] || 72;
-  const tagSize = Math.round(brandSize * 0.48);
-
-  // Layout
-  let iconX = 60, iconY = 60, iconW = dim - 120, iconH = dim - 120;
-
-  if (hasText) {
-    if (pos === 'below') {
-      const textH = hasBrand ? brandSize + 20 : 0;
-      const tagH = hasTag ? tagSize + 16 : 0;
-      const totalTextH = textH + tagH + 40;
-      iconH = dim - totalTextH - 120;
-      iconY = 60;
-    } else if (pos === 'above') {
-      const textH = (hasBrand ? brandSize + 20 : 0) + (hasTag ? tagSize + 16 : 0) + 40;
-      iconY = textH + 20;
-      iconH = dim - textH - 120;
-    } else if (pos === 'right') {
-      iconW = Math.round(dim * 0.45);
-      iconH = dim - 120;
-    } else if (pos === 'centre') {
-    // Text centred on top of icon
-    const totalTextH = (hasBrand ? brandSize + 10 : 0) + (hasTag ? tagSize + 10 : 0);
-    let textY = (dim - totalTextH) / 2;
-    if (hasBrand) {
-      ctx.font = `800 ${brandSize}px ${fontStack}`;
-      ctx.fillStyle = fontColor;
-      ctx.textAlign = 'center';
-      // Drop shadow for readability
-      ctx.shadowColor = 'rgba(255,255,255,0.9)';
-      ctx.shadowBlur = 18;
-      ctx.fillText(brand, dim / 2, textY + brandSize);
-      ctx.shadowBlur = 0;
-      textY += brandSize + 10;
-    }
-    if (hasTag) {
-      ctx.font = `500 ${tagSize}px ${fontStack}`;
-      ctx.fillStyle = tagColor;
-      ctx.shadowColor = 'rgba(255,255,255,0.9)';
-      ctx.shadowBlur = 12;
-      ctx.fillText(tag, dim / 2, textY + tagSize);
-      ctx.shadowBlur = 0;
-    }
-  } else if (pos === 'overlay') {
-      // Full size icon, text on top with semi-transparent backing
+      urls.push(data.data[0].url);
+    } catch(e) {
+      document.getElementById('generating').style.display = 'none';
+      showErr(e.message);
+      // Restore steps
+      document.getElementById('progress').style.display = 'flex';
+      goStep(3);
+      return;
     }
   }
 
-  // Draw image
-  await new Promise(resolve => {
-    const img = new Image();
+  document.getElementById('generating').style.display = 'none';
+  showResults(urls, brand, tag, brandColor, tagColor);
+}
+
+// ===== SHOW RESULTS =====
+function showResults(urls, brand, tag, brandColor, tagColor) {
+  const container = document.getElementById('results');
+  container.innerHTML = '';
+  container.style.display = 'block';
+
+  urls.forEach((url, i) => {
+    const card = document.createElement('div');
+    card.className = 'result-card';
+
+    // Image + overlay wrapper
+    const imgWrap = document.createElement('div');
+    imgWrap.className = 'result-img-wrap';
+    imgWrap.id = 'wrap-' + i;
+    imgWrap.style.background = '#ffffff';
+
+    const img = document.createElement('img');
+    img.src = url;
+    img.alt = 'Logo ' + (i+1);
     img.crossOrigin = 'anonymous';
-    img.onload = () => {
-      if (pos === 'right' && hasText) {
-        ctx.drawImage(img, iconX, iconY, iconW, iconH);
-      } else {
-        ctx.drawImage(img, iconX, iconY, iconW, iconH);
+    imgWrap.appendChild(img);
+
+    // Text overlay div (CSS-based, no canvas issues)
+    if (brand) {
+      const overlay = document.createElement('div');
+      overlay.className = 'text-overlay pos-' + selPos;
+      overlay.id = 'overlay-' + i;
+
+      const brandEl = document.createElement('div');
+      brandEl.className = 'overlay-brand';
+      brandEl.textContent = brand;
+      brandEl.style.fontFamily = `'${selFont}', sans-serif`;
+      brandEl.style.fontSize = selSize + 'px';
+      brandEl.style.color = brandColor;
+      // White shadow for readability on any bg
+      brandEl.style.textShadow = '0 2px 12px rgba(255,255,255,0.8), 0 0 4px rgba(255,255,255,0.9)';
+      overlay.appendChild(brandEl);
+
+      if (tag) {
+        const tagEl = document.createElement('div');
+        tagEl.className = 'overlay-tag';
+        tagEl.textContent = tag;
+        tagEl.style.fontFamily = `'${selFont}', sans-serif`;
+        tagEl.style.fontSize = Math.round(selSize * 0.45) + 'px';
+        tagEl.style.color = tagColor;
+        tagEl.style.textShadow = '0 1px 8px rgba(255,255,255,0.8)';
+        overlay.appendChild(tagEl);
       }
-      resolve();
-    };
-    img.onerror = () => {
-      // Draw placeholder
-      ctx.fillStyle = '#eee';
-      ctx.fillRect(iconX, iconY, iconW, iconH);
-      resolve();
-    };
-    // Use proxy to avoid CORS on canvas
-    img.src = imgUrl;
+      imgWrap.appendChild(overlay);
+    }
+
+    // Bg toggle
+    const foot = document.createElement('div');
+    foot.className = 'result-foot';
+    foot.innerHTML = `<div class="result-foot-title">Logo ${i+1}</div>`;
+
+    const bgRow = document.createElement('div');
+    bgRow.className = 'bg-row';
+    const bgs = [{bg:'#ffffff',label:'White'},{bg:'#111111',label:'Dark'},{bg:'repeating-conic-gradient(#ccc 0% 25%,#fff 0% 50%) 0 0/16px 16px',label:'Clear'}];
+    bgs.forEach((b,bi) => {
+      const dot = document.createElement('div');
+      dot.className = 'bg-dot' + (bi===0?' on':'');
+      dot.style.background = b.bg;
+      if(bi>0) dot.style.border = '1px solid #333';
+      dot.title = b.label;
+      dot.onclick = () => {
+        bgRow.querySelectorAll('.bg-dot').forEach(d=>d.classList.remove('on'));
+        dot.classList.add('on');
+        document.getElementById('wrap-'+i).style.background = b.bg;
+      };
+      bgRow.appendChild(dot);
+    });
+    foot.appendChild(bgRow);
+
+    // Download buttons
+    const dlRow = document.createElement('div');
+    dlRow.className = 'dl-row';
+    dlRow.style.marginTop = '12px';
+
+    // Download via canvas (render img + text overlay onto canvas)
+    const dlPng = document.createElement('button');
+    dlPng.className = 'dl-btn';
+    dlPng.textContent = '⬇ Download PNG';
+    dlPng.onclick = () => downloadFinal(url, i, brand, tag, brandColor, tagColor, 'png');
+
+    const dlJpg = document.createElement('button');
+    dlJpg.className = 'dl-btn-plain';
+    dlJpg.textContent = '⬇ JPG';
+    dlJpg.onclick = () => downloadFinal(url, i, brand, tag, brandColor, tagColor, 'jpg');
+
+    dlRow.appendChild(dlPng);
+    dlRow.appendChild(dlJpg);
+    foot.appendChild(dlRow);
+
+    card.appendChild(imgWrap);
+    card.appendChild(foot);
+    container.appendChild(card);
+
+    // Add to history
+    addToHistory(url, brand);
   });
 
-  if (!hasText) return;
-
-  // Draw text
-  ctx.textAlign = pos === 'right' ? 'left' : 'center';
-
-  const fontStack = `'${font}', sans-serif`;
-
-  if (pos === 'below') {
-    let textY = iconY + iconH + 60;
-    if (hasBrand) {
-      ctx.font = `800 ${brandSize}px ${fontStack}`;
-      ctx.fillStyle = fontColor;
-      ctx.fillText(brand, dim / 2, textY);
-      textY += brandSize + 10;
-    }
-    if (hasTag) {
-      ctx.font = `500 ${tagSize}px ${fontStack}`;
-      ctx.fillStyle = tagColor;
-      ctx.fillText(tag, dim / 2, textY + tagSize);
-    }
-  } else if (pos === 'above') {
-    let textY = 80;
-    if (hasBrand) {
-      ctx.font = `800 ${brandSize}px ${fontStack}`;
-      ctx.fillStyle = fontColor;
-      ctx.fillText(brand, dim / 2, textY + brandSize);
-      textY += brandSize + 10;
-    }
-    if (hasTag) {
-      ctx.font = `500 ${tagSize}px ${fontStack}`;
-      ctx.fillStyle = tagColor;
-      ctx.fillText(tag, dim / 2, textY + tagSize);
-    }
-  } else if (pos === 'right') {
-    const textX = iconX + iconW + 60;
-    const totalH = (hasBrand ? brandSize : 0) + (hasTag ? tagSize + 16 : 0);
-    let textY = (dim - totalH) / 2;
-    if (hasBrand) {
-      ctx.font = `800 ${brandSize}px ${fontStack}`;
-      ctx.fillStyle = fontColor;
-      ctx.textAlign = 'left';
-      ctx.fillText(brand, textX, textY + brandSize);
-      textY += brandSize + 10;
-    }
-    if (hasTag) {
-      ctx.font = `500 ${tagSize}px ${fontStack}`;
-      ctx.fillStyle = tagColor;
-      ctx.textAlign = 'left';
-      ctx.fillText(tag, textX, textY + tagSize);
-    }
-  } else if (pos === 'centre') {
-    // Text centred on top of icon
-    const totalTextH = (hasBrand ? brandSize + 10 : 0) + (hasTag ? tagSize + 10 : 0);
-    let textY = (dim - totalTextH) / 2;
-    if (hasBrand) {
-      ctx.font = `800 ${brandSize}px ${fontStack}`;
-      ctx.fillStyle = fontColor;
-      ctx.textAlign = 'center';
-      // Drop shadow for readability
-      ctx.shadowColor = 'rgba(255,255,255,0.9)';
-      ctx.shadowBlur = 18;
-      ctx.fillText(brand, dim / 2, textY + brandSize);
-      ctx.shadowBlur = 0;
-      textY += brandSize + 10;
-    }
-    if (hasTag) {
-      ctx.font = `500 ${tagSize}px ${fontStack}`;
-      ctx.fillStyle = tagColor;
-      ctx.shadowColor = 'rgba(255,255,255,0.9)';
-      ctx.shadowBlur = 12;
-      ctx.fillText(tag, dim / 2, textY + tagSize);
-      ctx.shadowBlur = 0;
-    }
-  } else if (pos === 'overlay') {
-    // Semi-transparent backing strip at bottom
-    const stripH = (hasBrand ? brandSize + 20 : 0) + (hasTag ? tagSize + 20 : 0) + 40;
-    ctx.fillStyle = 'rgba(0,0,0,0.55)';
-    ctx.fillRect(0, dim - stripH - 20, dim, stripH + 20);
-    let textY = dim - stripH + 10;
-    if (hasBrand) {
-      ctx.font = `800 ${brandSize}px ${fontStack}`;
-      ctx.fillStyle = '#ffffff';
-      ctx.textAlign = 'center';
-      ctx.fillText(brand, dim / 2, textY + brandSize);
-      textY += brandSize + 10;
-    }
-    if (hasTag) {
-      ctx.font = `500 ${tagSize}px ${fontStack}`;
-      ctx.fillStyle = 'rgba(255,255,255,0.75)';
-      ctx.textAlign = 'center';
-      ctx.fillText(tag, dim / 2, textY + tagSize);
-    }
-  }
+  // New logo button
+  const newBtn = document.createElement('button');
+  newBtn.className = 'new-btn';
+  newBtn.textContent = '+ Generate New Logo';
+  newBtn.onclick = () => {
+    container.style.display = 'none';
+    document.getElementById('progress').style.display = 'flex';
+    goStep(0);
+    window.scrollTo(0,0);
+  };
+  container.appendChild(newBtn);
 }
 
-function downloadCanvas(el, name) {
-  const canvas = el.closest('.result-card').querySelector('canvas');
-  const a = document.createElement('a');
-  a.href = canvas.toDataURL('image/png');
-  a.download = name + '.png';
-  a.click();
+// ===== DOWNLOAD - uses canvas only at download time =====
+function downloadFinal(imgUrl, idx, brand, tag, brandColor, tagColor, fmt) {
+  const dim = 1200;
+  const canvas = document.createElement('canvas');
+  canvas.width = dim; canvas.height = dim;
+  const ctx = canvas.getContext('2d');
+
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+
+  img.onload = () => {
+    // White bg
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, dim, dim);
+
+    // Draw logo image
+    let iconX=60, iconY=60, iconW=dim-120, iconH=dim-120;
+    const fs = selFont === 'Arial' ? 'Arial, sans-serif' : `'${selFont}', sans-serif`;
+    const brandPx = Math.round(selSize * (dim/400));
+    const tagPx = Math.round(brandPx * 0.45);
+
+    if (brand) {
+      if (selPos === 'below') {
+        const textBlock = brandPx + 20 + (tag ? tagPx + 16 : 0) + 40;
+        iconH = dim - textBlock - 120;
+      } else if (selPos === 'above') {
+        const textBlock = brandPx + 20 + (tag ? tagPx + 16 : 0) + 40;
+        iconY = textBlock + 20;
+        iconH = dim - textBlock - 120;
+      } else if (selPos === 'right') {
+        iconW = Math.round(dim * 0.44);
+      }
+    }
+
+    ctx.drawImage(img, iconX, iconY, iconW, iconH);
+
+    if (brand) {
+      ctx.textBaseline = 'top';
+      if (selPos === 'below') {
+        let y = iconY + iconH + 40;
+        ctx.font = `800 ${brandPx}px ${fs}`;
+        ctx.fillStyle = brandColor;
+        ctx.textAlign = 'center';
+        ctx.fillText(brand, dim/2, y);
+        if (tag) { ctx.font = `500 ${tagPx}px ${fs}`; ctx.fillStyle = tagColor; ctx.fillText(tag, dim/2, y + brandPx + 12); }
+      } else if (selPos === 'above') {
+        ctx.font = `800 ${brandPx}px ${fs}`;
+        ctx.fillStyle = brandColor;
+        ctx.textAlign = 'center';
+        ctx.fillText(brand, dim/2, 60);
+        if (tag) { ctx.font = `500 ${tagPx}px ${fs}`; ctx.fillStyle = tagColor; ctx.fillText(tag, dim/2, 60 + brandPx + 12); }
+      } else if (selPos === 'right') {
+        const tx = iconX + iconW + 50;
+        const totalH = brandPx + (tag ? tagPx+16:0);
+        let ty = (dim - totalH) / 2;
+        ctx.font = `800 ${brandPx}px ${fs}`;
+        ctx.fillStyle = brandColor;
+        ctx.textAlign = 'left';
+        ctx.fillText(brand, tx, ty);
+        if (tag) { ctx.font = `500 ${tagPx}px ${fs}`; ctx.fillStyle = tagColor; ctx.fillText(tag, tx, ty + brandPx + 12); }
+      } else if (selPos === 'centre') {
+        const totalH = brandPx + (tag ? tagPx+16:0);
+        let ty = (dim - totalH) / 2;
+        ctx.font = `800 ${brandPx}px ${fs}`;
+        ctx.fillStyle = brandColor;
+        ctx.textAlign = 'center';
+        ctx.shadowColor = 'rgba(255,255,255,0.95)'; ctx.shadowBlur = 20;
+        ctx.fillText(brand, dim/2, ty);
+        ctx.shadowBlur = 0;
+        if (tag) { ctx.font = `500 ${tagPx}px ${fs}`; ctx.fillStyle = tagColor; ctx.shadowColor='rgba(255,255,255,0.9)'; ctx.shadowBlur=12; ctx.fillText(tag, dim/2, ty+brandPx+12); ctx.shadowBlur=0; }
+      }
+    }
+
+    const mime = fmt === 'jpg' ? 'image/jpeg' : 'image/png';
+    const ext = fmt === 'jpg' ? '.jpg' : '.png';
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL(mime, 0.95);
+    a.download = (brand||'logo').replace(/\s+/g,'-').toLowerCase() + '-logo-' + (idx+1) + ext;
+    a.click();
+  };
+
+  img.onerror = () => {
+    // If CORS blocks canvas, fall back to direct URL download
+    const a = document.createElement('a');
+    a.href = imgUrl;
+    a.target = '_blank';
+    a.download = 'logo-' + (idx+1) + '.png';
+    a.click();
+  };
+
+  img.src = imgUrl + (imgUrl.includes('?') ? '&' : '?') + 'cb=' + Date.now();
 }
 
-function downloadCanvasJPG(el, name) {
-  const canvas = el.closest('.result-card').querySelector('canvas');
-  const a = document.createElement('a');
-  a.href = canvas.toDataURL('image/jpeg', 0.95);
-  a.download = name + '.jpg';
-  a.click();
+// ===== HISTORY =====
+function addToHistory(url, brand) {
+  history.push({url, brand});
+  const sec = document.getElementById('history-section');
+  const grid = document.getElementById('history-grid');
+  sec.style.display = 'block';
+
+  const thumb = document.createElement('div');
+  thumb.className = 'history-thumb';
+  thumb.title = brand || 'Logo';
+  const img = document.createElement('img');
+  img.src = url;
+  img.alt = brand || 'Logo';
+  thumb.appendChild(img);
+
+  // Click to view full size
+  thumb.onclick = () => window.open(url, '_blank');
+  grid.insertBefore(thumb, grid.firstChild);
 }
 
-function makeLoadCard(n) {
-  const d = document.createElement('div');
-  d.className = 'loading-card';
-  d.innerHTML = `<div class="loading-inner"><div class="spinner"></div><div class="loading-txt">Creating logo ${n}…<br><span style="font-size:11px;color:#4a4a70">~15–20 seconds</span></div></div><div class="loading-foot"></div>`;
-  return d;
-}
-
-function replaceWithError(lc, msg) {
-  const d = document.createElement('div');
-  d.className = 'err';
-  if (msg.includes('401') || msg.includes('Incorrect API key')) {
-    d.innerHTML = '🔑 <strong>Wrong API key.</strong> Check it and tap Save again.';
+// ===== ERROR =====
+function showErr(msg) {
+  const b = document.getElementById('err-box');
+  b.style.display = 'block';
+  if (msg.includes('401') || msg.includes('Incorrect API key') || msg.includes('invalid_api_key')) {
+    b.innerHTML = '🔑 <strong>Wrong API key.</strong> Check it\'s correct and tap Save again.';
   } else if (msg.includes('429')) {
-    d.innerHTML = '⏳ <strong>Too many requests.</strong> Wait 30 seconds and try again.';
-  } else if (msg.includes('billing') || msg.includes('quota') || msg.includes('exceeded')) {
-    d.innerHTML = '💳 <strong>Out of credit.</strong> Add more at platform.openai.com → Billing.';
+    b.innerHTML = '⏳ <strong>Too many requests.</strong> Wait 30 seconds and try again.';
+  } else if (msg.includes('billing') || msg.includes('quota') || msg.includes('exceeded') || msg.includes('insufficient')) {
+    b.innerHTML = '💳 <strong>Out of credit.</strong> Add more at <a href="https://platform.openai.com/account/billing" target="_blank" style="color:#6c63ff">platform.openai.com → Billing</a>.';
   } else {
-    d.innerHTML = `⚠️ ${msg}. Please try again.`;
+    b.innerHTML = `⚠️ ${msg}. Please try again.`;
   }
-  lc.replaceWith(d);
 }
 </script>
 </body>
