@@ -355,9 +355,9 @@ async function generate() {
     var p = 'Professional logo design. ' + promptText + '. Style: ' + selStyle + '. Type: ' + selType + '. ' + vars[i % 3] + '. Pure white background. High quality flat vector graphic. No text or words in image. Clean, scalable, memorable.';
 
     try {
-      var res = await fetch('https://api.ideogram.ai/v1/ideogram-v3/generate', {
+      var res = await fetch('https://logoforge-proxy.onrender.com/generate', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Api-Key': key },
+        headers: { 'Content-Type': 'application/json', 'x-api-key': key },
         body: JSON.stringify({ prompt: p, rendering_speed: 'DEFAULT', style_type: 'DESIGN', aspect_ratio: 'ASPECT_1_1' })
       });
       var data = await res.json();
