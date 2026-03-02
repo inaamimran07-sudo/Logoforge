@@ -3,13 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>LogoForge</title>
+<title>LogoForge — Ideogram V3</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Playfair+Display:wght@700;900&family=Oswald:wght@600;700&family=Raleway:wght@700;800&family=Roboto:wght@700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{background:#0d0d1a;color:#f0f0ff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
-
-/* LOCK */
 #lock{position:fixed;inset:0;background:#0d0d1a;z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center}
 #lock h2{font-size:24px;font-weight:800;margin-bottom:6px}
 #lock p{color:#7070a0;font-size:13px;margin-bottom:24px}
@@ -17,113 +15,84 @@ body{background:#0d0d1a;color:#f0f0ff;font-family:-apple-system,BlinkMacSystemFo
 #pw:focus{border-color:#6c63ff}
 .unlock-btn{width:100%;max-width:300px;padding:14px;background:linear-gradient(135deg,#6c63ff,#9b59ff);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit}
 #pw-err{color:#ff6584;font-size:13px;margin-top:10px;display:none}
-
-/* APP */
 #app{display:none;max-width:600px;margin:0 auto;padding:24px 16px 80px}
 .app-title{text-align:center;font-size:26px;font-weight:800;margin-bottom:4px}
 .app-title span{color:#6c63ff}
 .app-sub{text-align:center;color:#7070a0;font-size:12px;margin-bottom:20px}
-
-/* API KEY */
 .key-wrap{background:#161628;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px;margin-bottom:20px}
 .key-wrap-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#7070a0;margin-bottom:10px}
 .key-row{display:flex;gap:8px}
 .key-row input{flex:1;background:#0d0d1a;border:1px solid rgba(255,255,255,0.08);color:#f0f0ff;padding:10px 13px;border-radius:8px;font-size:14px;outline:none;font-family:inherit}
 .key-row input:focus{border-color:#6c63ff}
 .key-save{padding:10px 16px;background:#6c63ff;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
-.key-ok{font-size:12px;color:#4caf50;margin-top:8px;display:none}
-
-/* STEPS */
+.key-note{font-size:11px;color:#4a4a70;margin-top:8px;line-height:1.5}
+.key-note a{color:#6c63ff}
+.key-ok{font-size:12px;color:#4caf50;margin-top:6px;display:none}
+.progress{display:flex;gap:6px;justify-content:center;margin-bottom:20px}
+.pd{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.1);transition:all 0.2s}
+.pd.on{background:#6c63ff}
+.pd.done{background:#4caf50}
 .step{background:#161628;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:18px;margin-bottom:14px;display:none}
 .step.active{display:block}
-.step-num{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#6c63ff;margin-bottom:8px}
-.step-title{font-size:17px;font-weight:700;margin-bottom:14px}
-
+.step-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#6c63ff;margin-bottom:8px}
+.step-title{font-size:18px;font-weight:700;margin-bottom:16px}
 textarea{width:100%;background:#0d0d1a;border:1px solid rgba(255,255,255,0.08);color:#f0f0ff;padding:12px;border-radius:10px;font-size:15px;outline:none;font-family:inherit;resize:vertical;min-height:100px;line-height:1.6}
 textarea:focus{border-color:#6c63ff}
 input[type=text]{width:100%;background:#0d0d1a;border:1px solid rgba(255,255,255,0.08);color:#f0f0ff;padding:11px 13px;border-radius:10px;font-size:15px;outline:none;font-family:inherit}
 input[type=text]:focus{border-color:#6c63ff}
-
 .hint{font-size:12px;color:#4a4a70;margin-top:8px;line-height:1.5}
-
-/* OPTIONS GRID */
-.opts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px}
-.opt{padding:9px 15px;border:1px solid rgba(255,255,255,0.08);background:#0d0d1a;color:#a0a0c0;border-radius:10px;cursor:pointer;font-size:13px;font-weight:500;transition:all 0.15s}
-.opt:hover{border-color:rgba(108,99,255,0.5)}
+.field{margin-bottom:16px}
+.field-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#7070a0;margin-bottom:8px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{padding:9px 15px;border:1px solid rgba(255,255,255,0.08);background:#0d0d1a;color:#a0a0c0;border-radius:10px;cursor:pointer;font-size:13px;font-weight:500;font-family:inherit}
 .opt.on{border-color:#6c63ff;background:rgba(108,99,255,0.15);color:#6c63ff}
-.opt.font-opt{font-size:14px;min-width:120px;text-align:center}
-
-/* COLOR ROW */
-.color-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:4px}
-.color-box{display:flex;align-items:center;gap:8px;background:#0d0d1a;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:9px 12px}
+.opt.font-opt{min-width:130px;text-align:center;font-size:14px}
+.color-row{display:flex;gap:10px;flex-wrap:wrap}
+.color-box{display:flex;align-items:center;gap:8px;background:#0d0d1a;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:9px 12px;flex:1}
 input[type=color]{width:30px;height:30px;border:none;border-radius:6px;cursor:pointer;background:none;padding:0}
 .color-box span{font-size:12px;color:#7070a0}
-
-/* FIELD */
-.field{margin-bottom:14px}
-.field label{display:block;font-size:12px;color:#7070a0;font-weight:600;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px}
-
-/* BUTTONS */
 .next-btn{width:100%;padding:14px;background:linear-gradient(135deg,#6c63ff,#9b59ff);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:14px}
-.next-btn:disabled{opacity:0.4;cursor:not-allowed}
-.back-btn{width:100%;padding:12px;background:transparent;color:#7070a0;border:1px solid rgba(255,255,255,0.08);border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px}
+.back-btn{width:100%;padding:11px;background:transparent;color:#7070a0;border:1px solid rgba(255,255,255,0.08);border-radius:12px;font-size:14px;cursor:pointer;font-family:inherit;margin-top:8px}
 .gen-btn{width:100%;padding:16px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;border:none;border-radius:12px;font-size:17px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:14px}
-.gen-btn:disabled{opacity:0.4;cursor:not-allowed}
-
-/* PROGRESS */
-.progress{display:flex;gap:6px;justify-content:center;margin-bottom:20px}
-.prog-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.1);transition:background 0.2s}
-.prog-dot.on{background:#6c63ff}
-.prog-dot.done{background:#4caf50}
-
-/* GENERATING */
-#generating{display:none;text-align:center;padding:40px 20px;background:#161628;border:1px solid rgba(255,255,255,0.08);border-radius:16px;margin-bottom:14px}
+#summary{background:#0d0d1a;border-radius:10px;padding:14px;font-size:13px;color:#a0a0c0;line-height:1.9}
+#generating{display:none;text-align:center;padding:44px 20px;background:#161628;border:1px solid rgba(255,255,255,0.08);border-radius:16px;margin-bottom:14px}
 .spinner{width:44px;height:44px;border:3px solid rgba(255,255,255,0.08);border-top-color:#6c63ff;border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto 14px}
 @keyframes spin{to{transform:rotate(360deg)}}
-#gen-status{font-size:14px;color:#7070a0;line-height:1.7}
-
-/* RESULTS */
+#gen-status{font-size:14px;color:#7070a0;line-height:1.8}
 #results{display:none}
 .result-card{background:#161628;border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;margin-bottom:16px}
-.result-img-wrap{width:100%;background:#fff;position:relative;overflow:hidden}
-.result-img-wrap img{width:100%;display:block}
-.text-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
-.text-overlay.pos-below{justify-content:flex-end;padding-bottom:24px}
-.text-overlay.pos-above{justify-content:flex-start;padding-top:24px}
-.text-overlay.pos-right{align-items:flex-end;padding-right:24px}
-.overlay-brand{font-weight:800;line-height:1.1;text-align:center}
-.overlay-tag{font-weight:500;margin-top:4px;text-align:center;opacity:0.85}
-
+.logo-display{width:100%;position:relative;background:#ffffff;overflow:hidden;line-height:0}
+.logo-display img{width:100%;display:block}
+.text-layer{position:absolute;inset:0;display:flex;pointer-events:none;padding:16px}
+.text-layer.below{flex-direction:column;align-items:center;justify-content:flex-end}
+.text-layer.above{flex-direction:column;align-items:center;justify-content:flex-start}
+.text-layer.right{flex-direction:column;align-items:flex-end;justify-content:center}
+.text-layer.centre{flex-direction:column;align-items:center;justify-content:center}
+.overlay-brand{font-weight:800;line-height:1.1;text-align:center;word-break:break-word}
+.overlay-tag{font-weight:500;margin-top:4px;text-align:center;opacity:0.85;word-break:break-word}
 .result-foot{padding:14px}
-.result-foot-title{font-size:12px;color:#7070a0;font-weight:600;margin-bottom:12px}
-.dl-row{display:flex;gap:8px}
-.dl-btn{flex:1;padding:12px;background:linear-gradient(135deg,#6c63ff,#9b59ff);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;text-align:center}
-.dl-btn-plain{flex:1;padding:12px;background:#0d0d1a;color:#c0c0e0;border:1px solid rgba(255,255,255,0.1);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
-
+.result-foot-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.result-num{font-size:12px;color:#7070a0;font-weight:600}
+.bg-swatches{display:flex;gap:6px}
+.bg-sw{width:24px;height:24px;border-radius:5px;cursor:pointer;border:2px solid transparent}
+.bg-sw.on{border-color:#6c63ff}
+.dl-row{display:flex;gap:8px;margin-top:12px}
+.dl-btn{flex:1;padding:12px;background:linear-gradient(135deg,#6c63ff,#9b59ff);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+.dl-link{flex:1;padding:12px;background:#0d0d1a;color:#c0c0e0;border:1px solid rgba(255,255,255,0.1);border-radius:10px;font-size:13px;font-weight:600;text-decoration:none;display:flex;align-items:center;justify-content:center}
 .new-btn{width:100%;padding:14px;background:#161628;color:#6c63ff;border:1px solid rgba(108,99,255,0.3);border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:6px}
-
-/* ERR */
-.err-box{background:rgba(255,101,132,0.08);border:1px solid rgba(255,101,132,0.2);border-radius:12px;padding:14px;margin-bottom:14px;font-size:13px;color:#ff6584;line-height:1.6;display:none}
-
-/* HISTORY */
-#history-section{margin-top:30px;display:none}
-.history-title{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#7070a0;margin-bottom:12px}
+.err{background:rgba(255,101,132,0.08);border:1px solid rgba(255,101,132,0.2);border-radius:12px;padding:14px;margin-bottom:14px;font-size:13px;color:#ff6584;line-height:1.6;display:none}
+#history-wrap{margin-top:30px;display:none}
+.history-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#7070a0;margin-bottom:12px}
 .history-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.history-thumb{border-radius:10px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:border-color 0.15s;aspect-ratio:1;background:#fff}
-.history-thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.history-thumb:hover{border-color:#6c63ff}
-
-/* BG PREVIEW TOGGLE */
-.bg-row{display:flex;gap:7px;margin-top:10px}
-.bg-dot{width:26px;height:26px;border-radius:6px;cursor:pointer;border:2px solid transparent;transition:border-color 0.15s}
-.bg-dot.on{border-color:#6c63ff}
+.hist-thumb{border-radius:10px;overflow:hidden;cursor:pointer;border:2px solid transparent;aspect-ratio:1;background:#fff}
+.hist-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.hist-thumb:hover{border-color:#6c63ff}
 </style>
 </head>
 <body>
 
-<!-- LOCK -->
 <div id="lock">
-  <div style="font-size:48px;margin-bottom:14px">🔒</div>
+  <div style="font-size:46px;margin-bottom:14px">🔒</div>
   <h2>LogoForge</h2>
   <p>Private access only</p>
   <input type="password" id="pw" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkPw()" />
@@ -131,110 +100,97 @@ input[type=color]{width:30px;height:30px;border:none;border-radius:6px;cursor:po
   <p id="pw-err">Wrong password. Try again.</p>
 </div>
 
-<!-- APP -->
 <div id="app">
   <div class="app-title">Logo<span>Forge</span></div>
-  <p class="app-sub">AI Logo Generator — DALL-E 3</p>
+  <p class="app-sub">Powered by OpenAI Ideogram V3 — ~5p per logo</p>
 
-  <!-- API KEY -->
   <div class="key-wrap">
-    <div class="key-wrap-title">OpenAI API Key</div>
+    <div class="key-wrap-title">Ideogram API Key</div>
     <div class="key-row">
-      <input type="password" id="key-input" placeholder="sk-..." />
+      <input type="password" id="key-input" placeholder="Paste Ideogram API key..." />
       <button class="key-save" onclick="saveKey()">Save</button>
     </div>
-    <div class="key-ok" id="key-ok">✅ Key saved</div>
+    <div class="key-note">Get a key at <a href="https://ideogram.ai/manage-api" target="_blank">ideogram.ai/manage-api</a></div>
+    <div class="key-ok" id="key-ok">✅ Key saved — ready to generate</div>
   </div>
 
-  <!-- PROGRESS DOTS -->
-  <div class="progress" id="progress">
-    <div class="prog-dot on" id="dot0"></div>
-    <div class="prog-dot" id="dot1"></div>
-    <div class="prog-dot" id="dot2"></div>
-    <div class="prog-dot" id="dot3"></div>
+  <div class="progress" id="prog">
+    <div class="pd on" id="pd0"></div>
+    <div class="pd" id="pd1"></div>
+    <div class="pd" id="pd2"></div>
+    <div class="pd" id="pd3"></div>
   </div>
 
-  <!-- STEP 1: DESCRIBE -->
   <div class="step active" id="step0">
-    <div class="step-num">Step 1 of 4</div>
+    <div class="step-label">Step 1 of 4</div>
     <div class="step-title">Describe your logo</div>
-    <textarea id="prompt" placeholder="e.g. A plumbing company called Apex Plumbing. Blue and orange colours, bold and professional feel."></textarea>
-    <div class="hint">Describe the business, industry, colours, and style you want. The more detail, the better.</div>
-    <button class="next-btn" onclick="goStep(1)">Next →</button>
+    <textarea id="prompt" placeholder="e.g. A bold professional logo for a plumbing company called Apex Plumbing. Blue and orange colours, strong and trustworthy feel."></textarea>
+    <div class="hint">Include the company name, industry, colours, and style. More detail = better results.</div>
+    <button class="next-btn" onclick="next(1)">Next →</button>
   </div>
 
-  <!-- STEP 2: STYLE + TYPE -->
   <div class="step" id="step1">
-    <div class="step-num">Step 2 of 4</div>
+    <div class="step-label">Step 2 of 4</div>
     <div class="step-title">Choose a style</div>
-
     <div class="field">
-      <label>Logo Style</label>
+      <div class="field-label">Visual Style</div>
       <div class="opts" id="style-opts">
-        <div class="opt on" data-v="modern minimal clean">Modern Minimal</div>
-        <div class="opt" data-v="bold industrial strong">Bold & Strong</div>
-        <div class="opt" data-v="luxury premium elegant">Luxury</div>
-        <div class="opt" data-v="playful fun colorful">Playful</div>
-        <div class="opt" data-v="vintage retro classic">Vintage Retro</div>
-        <div class="opt" data-v="tech futuristic neon">Tech Future</div>
-        <div class="opt" data-v="organic natural earthy">Organic</div>
-        <div class="opt" data-v="geometric abstract sharp">Geometric</div>
+        <div class="opt on" data-v="modern minimal clean flat">Modern Minimal</div>
+        <div class="opt" data-v="bold industrial strong powerful">Bold &amp; Strong</div>
+        <div class="opt" data-v="luxury premium elegant sophisticated">Luxury</div>
+        <div class="opt" data-v="playful fun friendly colourful">Playful</div>
+        <div class="opt" data-v="vintage retro classic heritage">Vintage Retro</div>
+        <div class="opt" data-v="futuristic tech neon digital">Tech / Future</div>
+        <div class="opt" data-v="organic natural earthy handcrafted">Organic</div>
+        <div class="opt" data-v="geometric abstract sharp angular">Geometric</div>
       </div>
     </div>
-
     <div class="field">
-      <label>Logo Type</label>
+      <div class="field-label">Logo Type</div>
       <div class="opts" id="type-opts">
-        <div class="opt on" data-v="icon symbol only no text no words">Icon / Symbol</div>
-        <div class="opt" data-v="badge emblem crest shield">Badge / Emblem</div>
-        <div class="opt" data-v="monogram large initials letters">Monogram</div>
-        <div class="opt" data-v="abstract geometric shape">Abstract</div>
-        <div class="opt" data-v="mascot character illustration">Mascot</div>
+        <div class="opt on" data-v="icon symbol graphic mark no text">Icon / Symbol</div>
+        <div class="opt" data-v="badge emblem crest shield circular">Badge / Emblem</div>
+        <div class="opt" data-v="monogram large letter initials">Monogram</div>
+        <div class="opt" data-v="abstract geometric shape mark">Abstract</div>
+        <div class="opt" data-v="mascot character animal illustration">Mascot</div>
       </div>
     </div>
-
     <div class="field">
-      <label>Number of logos</label>
+      <div class="field-label">How Many Logos</div>
       <div class="opts" id="count-opts">
         <div class="opt on" data-n="1">1</div>
         <div class="opt" data-n="2">2</div>
         <div class="opt" data-n="3">3</div>
       </div>
     </div>
-
-    <button class="next-btn" onclick="goStep(2)">Next →</button>
-    <button class="back-btn" onclick="goStep(0)">← Back</button>
+    <button class="next-btn" onclick="next(2)">Next →</button>
+    <button class="back-btn" onclick="next(0)">← Back</button>
   </div>
 
-  <!-- STEP 3: TEXT -->
   <div class="step" id="step2">
-    <div class="step-num">Step 3 of 4</div>
+    <div class="step-label">Step 3 of 4</div>
     <div class="step-title">Add text to your logo</div>
-
     <div class="field">
-      <label>Brand Name</label>
+      <div class="field-label">Brand Name (leave blank to skip)</div>
       <input type="text" id="txt-brand" placeholder="e.g. Apex Plumbing" />
     </div>
-
     <div class="field">
-      <label>Tagline (optional)</label>
-      <input type="text" id="txt-tag" placeholder="e.g. Fast & Reliable" />
+      <div class="field-label">Tagline (optional)</div>
+      <input type="text" id="txt-tag" placeholder="e.g. Fast &amp; Reliable" />
     </div>
-
     <div class="field">
-      <label>Font</label>
+      <div class="field-label">Font</div>
       <div class="opts" id="font-opts">
         <div class="opt font-opt on" data-f="Montserrat" style="font-family:'Montserrat',sans-serif;font-weight:800">Montserrat</div>
-        <div class="opt font-opt" data-f="Playfair Display" style="font-family:'Playfair Display',serif;font-weight:700">Playfair</div>
+        <div class="opt font-opt" data-f="Playfair Display" style="font-family:'Playfair Display',serif">Playfair</div>
         <div class="opt font-opt" data-f="Oswald" style="font-family:'Oswald',sans-serif;font-weight:700">Oswald</div>
         <div class="opt font-opt" data-f="Raleway" style="font-family:'Raleway',sans-serif;font-weight:800">Raleway</div>
         <div class="opt font-opt" data-f="Roboto" style="font-family:'Roboto',sans-serif;font-weight:700">Roboto</div>
-        <div class="opt font-opt" data-f="Arial" style="font-family:Arial,sans-serif;font-weight:700">Arial</div>
+        <div class="opt font-opt" data-f="Arial" style="font-family:Arial,sans-serif;font-weight:700">Arial Bold</div>
       </div>
     </div>
-
     <div class="field">
-      <label>Text Position</label>
+      <div class="field-label">Text Position</div>
       <div class="opts" id="pos-opts">
         <div class="opt on" data-p="below">Below Icon</div>
         <div class="opt" data-p="above">Above Icon</div>
@@ -242,447 +198,397 @@ input[type=color]{width:30px;height:30px;border:none;border-radius:6px;cursor:po
         <div class="opt" data-p="centre">Centre</div>
       </div>
     </div>
-
     <div class="field">
-      <label>Text Size</label>
+      <div class="field-label">Text Size</div>
       <div class="opts" id="size-opts">
-        <div class="opt" data-s="40">Small</div>
-        <div class="opt on" data-s="58">Medium</div>
-        <div class="opt" data-s="76">Large</div>
-        <div class="opt" data-s="96">X-Large</div>
+        <div class="opt" data-s="3">Small</div>
+        <div class="opt on" data-s="5">Medium</div>
+        <div class="opt" data-s="7">Large</div>
+        <div class="opt" data-s="9">X-Large</div>
       </div>
     </div>
-
     <div class="field">
-      <label>Text Colour</label>
+      <div class="field-label">Text Colour</div>
       <div class="color-row">
-        <div class="color-box">
-          <input type="color" id="brand-color" value="#111122" />
-          <span>Brand name</span>
-        </div>
-        <div class="color-box">
-          <input type="color" id="tag-color" value="#666688" />
-          <span>Tagline</span>
-        </div>
+        <div class="color-box"><input type="color" id="brand-col" value="#111122" /><span>Brand name</span></div>
+        <div class="color-box"><input type="color" id="tag-col" value="#555577" /><span>Tagline</span></div>
       </div>
     </div>
-
-    <button class="next-btn" onclick="goStep(3)">Next →</button>
-    <button class="back-btn" onclick="goStep(1)">← Back</button>
+    <button class="next-btn" onclick="next(3)">Next →</button>
+    <button class="back-btn" onclick="next(1)">← Back</button>
   </div>
 
-  <!-- STEP 4: CONFIRM -->
   <div class="step" id="step3">
-    <div class="step-num">Step 4 of 4</div>
+    <div class="step-label">Step 4 of 4</div>
     <div class="step-title">Ready to generate</div>
-    <div id="summary" style="background:#0d0d1a;border-radius:10px;padding:14px;font-size:13px;color:#a0a0c0;line-height:1.8;margin-bottom:4px"></div>
-    <button class="gen-btn" id="gen-btn" onclick="generate()">⚡ Generate Logo</button>
-    <button class="back-btn" onclick="goStep(2)">← Back</button>
+    <div id="summary"></div>
+    <div style="font-size:12px;color:#4a4a70;margin-top:10px">Each logo costs ~5p. Make sure your Ideogram account has credit.</div>
+    <button class="gen-btn" onclick="generate()">⚡ Generate Logo</button>
+    <button class="back-btn" onclick="next(2)">← Back</button>
   </div>
 
-  <!-- GENERATING -->
   <div id="generating">
     <div class="spinner"></div>
-    <div id="gen-status">Sending to DALL-E 3…<br><span style="font-size:11px;color:#4a4a70">Takes about 15–20 seconds per logo</span></div>
+    <div id="gen-status">Sending to Ideogram V3…<br><span style="font-size:11px;color:#4a4a70">Takes about 15-20 seconds per logo</span></div>
   </div>
 
-  <!-- ERROR -->
-  <div class="err-box" id="err-box"></div>
-
-  <!-- RESULTS -->
+  <div class="err" id="err-box"></div>
   <div id="results"></div>
 
-  <!-- HISTORY -->
-  <div id="history-section">
-    <div class="history-title">📁 All Generated Logos</div>
+  <div id="history-wrap">
+    <div class="history-label">All Generated Logos</div>
     <div class="history-grid" id="history-grid"></div>
   </div>
-
 </div>
 
 <script>
-// ===== LOCK =====
-document.addEventListener('DOMContentLoaded', () => {
-  if (sessionStorage.getItem('lf_unlocked') === '1') unlock();
+var KEY_STORAGE = 'lf_ideogram_key';
+var selStyle = 'modern minimal clean flat';
+var selType = 'icon symbol graphic mark no text';
+var selCount = 1;
+var selFont = 'Montserrat';
+var selPos = 'below';
+var selSize = 5;
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (sessionStorage.getItem('lf_ok') === '1') unlock();
+  var k = localStorage.getItem(KEY_STORAGE) || '';
+  if (k) {
+    document.getElementById('key-input').value = k;
+    document.getElementById('key-ok').style.display = 'block';
+  }
 });
+
 function checkPw() {
   if (document.getElementById('pw').value === 'Atg9341poL') {
     unlock();
-    sessionStorage.setItem('lf_unlocked', '1');
+    sessionStorage.setItem('lf_ok', '1');
   } else {
     document.getElementById('pw-err').style.display = 'block';
     document.getElementById('pw').value = '';
   }
 }
+
 function unlock() {
   document.getElementById('lock').style.display = 'none';
   document.getElementById('app').style.display = 'block';
 }
 
-// ===== KEY =====
-document.addEventListener('DOMContentLoaded', () => {
-  const k = localStorage.getItem('lf_key') || '';
-  if (k) { document.getElementById('key-input').value = k; showKeyOk(); }
-});
 function saveKey() {
-  const k = document.getElementById('key-input').value.trim();
+  var k = document.getElementById('key-input').value.trim();
   if (!k) return;
-  localStorage.setItem('lf_key', k);
-  showKeyOk();
+  localStorage.setItem(KEY_STORAGE, k);
+  document.getElementById('key-ok').style.display = 'block';
 }
-function showKeyOk() { document.getElementById('key-ok').style.display = 'block'; }
-function getKey() { return localStorage.getItem('lf_key') || ''; }
 
-// ===== STATE =====
-let curStep = 0;
-let selStyle = 'modern minimal clean';
-let selType = 'icon symbol only no text no words';
-let selCount = 1;
-let selFont = 'Montserrat';
-let selPos = 'below';
-let selSize = 58;
-let history = [];
+function getKey() {
+  return localStorage.getItem(KEY_STORAGE) || '';
+}
 
-// Option selectors
-function makeSelector(groupId, stateKey) {
-  document.getElementById(groupId).addEventListener('click', e => {
-    const t = e.target.closest('.opt'); if (!t) return;
-    document.querySelectorAll('#' + groupId + ' .opt').forEach(o => o.classList.remove('on'));
+function wire(id, fn) {
+  document.getElementById(id).addEventListener('click', function(e) {
+    var t = e.target.closest('.opt');
+    if (!t) return;
+    document.querySelectorAll('#' + id + ' .opt').forEach(function(o) { o.classList.remove('on'); });
     t.classList.add('on');
-    if (stateKey === 'style') selStyle = t.dataset.v;
-    if (stateKey === 'type') selType = t.dataset.v;
-    if (stateKey === 'count') selCount = parseInt(t.dataset.n);
-    if (stateKey === 'font') selFont = t.dataset.f;
-    if (stateKey === 'pos') selPos = t.dataset.p;
-    if (stateKey === 'size') selSize = parseInt(t.dataset.s);
+    fn(t);
   });
 }
-makeSelector('style-opts', 'style');
-makeSelector('type-opts', 'type');
-makeSelector('count-opts', 'count');
-makeSelector('font-opts', 'font');
-makeSelector('pos-opts', 'pos');
-makeSelector('size-opts', 'size');
 
-// ===== STEPS =====
-function goStep(n) {
+wire('style-opts', function(t) { selStyle = t.dataset.v; });
+wire('type-opts', function(t) { selType = t.dataset.v; });
+wire('count-opts', function(t) { selCount = parseInt(t.dataset.n); });
+wire('font-opts', function(t) { selFont = t.dataset.f; });
+wire('pos-opts', function(t) { selPos = t.dataset.p; });
+wire('size-opts', function(t) { selSize = parseInt(t.dataset.s); });
+
+function next(n) {
   if (n === 1 && !document.getElementById('prompt').value.trim()) {
-    alert('Please describe your logo first.'); return;
+    alert('Please describe your logo first.');
+    return;
   }
   if (n === 3) buildSummary();
-  curStep = n;
-  document.querySelectorAll('.step').forEach((s, i) => {
+  document.querySelectorAll('.step').forEach(function(s, i) {
     s.classList.toggle('active', i === n);
   });
-  for (let i = 0; i < 4; i++) {
-    const d = document.getElementById('dot' + i);
-    d.className = 'prog-dot' + (i < n ? ' done' : i === n ? ' on' : '');
+  for (var i = 0; i < 4; i++) {
+    var d = document.getElementById('pd' + i);
+    d.className = 'pd' + (i < n ? ' done' : i === n ? ' on' : '');
   }
   window.scrollTo(0, 0);
 }
 
 function buildSummary() {
-  const brand = document.getElementById('txt-brand').value.trim();
-  const tag = document.getElementById('txt-tag').value.trim();
-  document.getElementById('summary').innerHTML = `
-    <b style="color:#f0f0ff">Logo description:</b> ${document.getElementById('prompt').value.trim()}<br>
-    <b style="color:#f0f0ff">Style:</b> ${selStyle} &nbsp;|&nbsp; <b style="color:#f0f0ff">Type:</b> ${selType.split(' ')[0]}<br>
-    <b style="color:#f0f0ff">Logos:</b> ${selCount}<br>
-    ${brand ? `<b style="color:#f0f0ff">Brand name:</b> ${brand}${tag ? ' — ' + tag : ''}<br>` : ''}
-    <b style="color:#f0f0ff">Font:</b> ${selFont} &nbsp;|&nbsp; <b style="color:#f0f0ff">Position:</b> ${selPos} &nbsp;|&nbsp; <b style="color:#f0f0ff">Size:</b> ${selSize}px
-  `;
+  var brand = document.getElementById('txt-brand').value.trim();
+  var tag = document.getElementById('txt-tag').value.trim();
+  var text = brand ? ('Text: ' + brand + (tag ? ' · ' + tag : '') + ' · ' + selFont + ' · ' + selPos) : 'Text: None';
+  document.getElementById('summary').innerHTML =
+    '<b style="color:#f0f0ff">Description:</b> ' + document.getElementById('prompt').value.trim() + '<br>' +
+    '<b style="color:#f0f0ff">Style:</b> ' + selStyle.split(' ')[0] + ' · <b style="color:#f0f0ff">Type:</b> ' + selType.split(' ')[0] + '<br>' +
+    '<b style="color:#f0f0ff">Logos:</b> ' + selCount + '<br>' +
+    '<b style="color:#f0f0ff">' + text + '</b>';
 }
 
-// ===== GENERATE =====
 async function generate() {
-  const key = getKey();
+  var key = getKey();
   if (!key) { alert('Please save your OpenAI API key first.'); return; }
 
-  const promptText = document.getElementById('prompt').value.trim();
-  const brand = document.getElementById('txt-brand').value.trim();
-  const tag = document.getElementById('txt-tag').value.trim();
-  const brandColor = document.getElementById('brand-color').value;
-  const tagColor = document.getElementById('tag-color').value;
+  var promptText = document.getElementById('prompt').value.trim();
+  var brand = document.getElementById('txt-brand').value.trim();
+  var tag = document.getElementById('txt-tag').value.trim();
+  var brandCol = document.getElementById('brand-col').value;
+  var tagCol = document.getElementById('tag-col').value;
 
-  // Hide steps, show generating
-  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-  document.getElementById('progress').style.display = 'none';
+  document.querySelectorAll('.step').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('prog').style.display = 'none';
   document.getElementById('generating').style.display = 'block';
   document.getElementById('results').style.display = 'none';
   document.getElementById('err-box').style.display = 'none';
 
-  const urls = [];
-  const variations = ['clean and refined','bold and striking','creative and unique'];
+  var vars = ['clean and refined', 'bold and striking', 'creative and distinctive'];
+  var urls = [];
 
-  for (let i = 0; i < selCount; i++) {
+  for (var i = 0; i < selCount; i++) {
     document.getElementById('gen-status').innerHTML =
-      `Generating logo ${i+1} of ${selCount}…<br><span style="font-size:11px;color:#4a4a70">Takes about 15–20 seconds</span>`;
+      'Generating logo ' + (i + 1) + ' of ' + selCount + '...<br><span style="font-size:11px;color:#4a4a70">~15-20 seconds</span>';
 
-    const p = `Professional logo for: ${promptText}. Style: ${selStyle}. Type: ${selType}. ${variations[i%3]} design. Pure white background. High quality flat vector graphic. No text, no words in the image — icon only. Clean, scalable, memorable, professional.`;
+    var p = 'Professional logo design. ' + promptText + '. Style: ' + selStyle + '. Type: ' + selType + '. ' + vars[i % 3] + '. Pure white background. High quality flat vector graphic. No text or words in image. Clean, scalable, memorable.';
 
     try {
-      const res = await fetch('https://api.openai.com/v1/images/generations', {
+      var res = await fetch('https://api.ideogram.ai/v1/ideogram-v3/generate', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key },
-        body: JSON.stringify({ model: 'dall-e-3', prompt: p, n: 1, size: '1024x1024', quality: 'hd', style: 'vivid' })
+        headers: { 'Content-Type': 'application/json', 'Api-Key': key },
+        body: JSON.stringify({ prompt: p, rendering_speed: 'DEFAULT', style_type: 'DESIGN', aspect_ratio: 'ASPECT_1_1' })
       });
-      const data = await res.json();
-      if (data.error) throw new Error(data.error.message);
+      var data = await res.json();
+      if (!res.ok) throw new Error(data && data.detail ? data.detail : 'API error');
+      if (!data.data || !data.data[0] || !data.data[0].url) throw new Error('No image returned from Ideogram.');
       urls.push(data.data[0].url);
     } catch(e) {
       document.getElementById('generating').style.display = 'none';
       showErr(e.message);
-      // Restore steps
-      document.getElementById('progress').style.display = 'flex';
-      goStep(3);
+      document.getElementById('prog').style.display = 'flex';
+      next(3);
       return;
     }
   }
 
   document.getElementById('generating').style.display = 'none';
-  showResults(urls, brand, tag, brandColor, tagColor);
+  showResults(urls, brand, tag, brandCol, tagCol);
 }
 
-// ===== SHOW RESULTS =====
-function showResults(urls, brand, tag, brandColor, tagColor) {
-  const container = document.getElementById('results');
+function showResults(urls, brand, tag, brandCol, tagCol) {
+  var container = document.getElementById('results');
   container.innerHTML = '';
   container.style.display = 'block';
 
-  urls.forEach((url, i) => {
-    const card = document.createElement('div');
+  urls.forEach(function(url, i) {
+    var card = document.createElement('div');
     card.className = 'result-card';
 
-    // Image + overlay wrapper
-    const imgWrap = document.createElement('div');
-    imgWrap.className = 'result-img-wrap';
-    imgWrap.id = 'wrap-' + i;
-    imgWrap.style.background = '#ffffff';
+    var display = document.createElement('div');
+    display.className = 'logo-display';
+    display.id = 'disp-' + i;
 
-    const img = document.createElement('img');
+    var img = document.createElement('img');
     img.src = url;
-    img.alt = 'Logo ' + (i+1);
-    img.crossOrigin = 'anonymous';
-    imgWrap.appendChild(img);
+    img.alt = 'Logo ' + (i + 1);
+    display.appendChild(img);
 
-    // Text overlay div (CSS-based, no canvas issues)
     if (brand) {
-      const overlay = document.createElement('div');
-      overlay.className = 'text-overlay pos-' + selPos;
-      overlay.id = 'overlay-' + i;
+      var layer = document.createElement('div');
+      layer.className = 'text-layer ' + selPos;
 
-      const brandEl = document.createElement('div');
+      var brandEl = document.createElement('div');
       brandEl.className = 'overlay-brand';
       brandEl.textContent = brand;
-      brandEl.style.fontFamily = `'${selFont}', sans-serif`;
-      brandEl.style.fontSize = selSize + 'px';
-      brandEl.style.color = brandColor;
-      // White shadow for readability on any bg
-      brandEl.style.textShadow = '0 2px 12px rgba(255,255,255,0.8), 0 0 4px rgba(255,255,255,0.9)';
-      overlay.appendChild(brandEl);
+      brandEl.style.fontFamily = "'" + selFont + "', sans-serif";
+      brandEl.style.fontSize = selSize + 'vw';
+      brandEl.style.color = brandCol;
+      brandEl.style.textShadow = '0 0 14px rgba(255,255,255,0.95), 0 2px 6px rgba(255,255,255,0.8)';
+      layer.appendChild(brandEl);
 
       if (tag) {
-        const tagEl = document.createElement('div');
+        var tagEl = document.createElement('div');
         tagEl.className = 'overlay-tag';
         tagEl.textContent = tag;
-        tagEl.style.fontFamily = `'${selFont}', sans-serif`;
-        tagEl.style.fontSize = Math.round(selSize * 0.45) + 'px';
-        tagEl.style.color = tagColor;
-        tagEl.style.textShadow = '0 1px 8px rgba(255,255,255,0.8)';
-        overlay.appendChild(tagEl);
+        tagEl.style.fontFamily = "'" + selFont + "', sans-serif";
+        tagEl.style.fontSize = (selSize * 0.45) + 'vw';
+        tagEl.style.color = tagCol;
+        tagEl.style.textShadow = '0 0 10px rgba(255,255,255,0.9)';
+        layer.appendChild(tagEl);
       }
-      imgWrap.appendChild(overlay);
+      display.appendChild(layer);
     }
 
-    // Bg toggle
-    const foot = document.createElement('div');
+    var foot = document.createElement('div');
     foot.className = 'result-foot';
-    foot.innerHTML = `<div class="result-foot-title">Logo ${i+1}</div>`;
 
-    const bgRow = document.createElement('div');
-    bgRow.className = 'bg-row';
-    const bgs = [{bg:'#ffffff',label:'White'},{bg:'#111111',label:'Dark'},{bg:'repeating-conic-gradient(#ccc 0% 25%,#fff 0% 50%) 0 0/16px 16px',label:'Clear'}];
-    bgs.forEach((b,bi) => {
-      const dot = document.createElement('div');
-      dot.className = 'bg-dot' + (bi===0?' on':'');
-      dot.style.background = b.bg;
-      if(bi>0) dot.style.border = '1px solid #333';
-      dot.title = b.label;
-      dot.onclick = () => {
-        bgRow.querySelectorAll('.bg-dot').forEach(d=>d.classList.remove('on'));
-        dot.classList.add('on');
-        document.getElementById('wrap-'+i).style.background = b.bg;
-      };
-      bgRow.appendChild(dot);
-    });
-    foot.appendChild(bgRow);
+    var topRow = document.createElement('div');
+    topRow.className = 'result-foot-row';
+    topRow.innerHTML = '<span class="result-num">Logo ' + (i + 1) + '</span>';
 
-    // Download buttons
-    const dlRow = document.createElement('div');
+    var swatches = document.createElement('div');
+    swatches.className = 'bg-swatches';
+
+    var bgs = [
+      { bg: '#ffffff', border: '1px solid #ddd' },
+      { bg: '#111111', border: '1px solid #333' },
+      { bg: 'repeating-conic-gradient(#ccc 0% 25%,#fff 0% 50%) 0 0/14px 14px', border: '1px solid #999' }
+    ];
+
+    (function(dispId) {
+      bgs.forEach(function(s, si) {
+        var sw = document.createElement('div');
+        sw.className = 'bg-sw' + (si === 0 ? ' on' : '');
+        sw.style.background = s.bg;
+        sw.style.border = s.border;
+        sw.onclick = (function(bg, swEl) {
+          return function() {
+            swatches.querySelectorAll('.bg-sw').forEach(function(x) { x.classList.remove('on'); });
+            swEl.classList.add('on');
+            document.getElementById(dispId).style.background = bg;
+          };
+        })(s.bg, sw);
+        swatches.appendChild(sw);
+      });
+    })('disp-' + i);
+
+    topRow.appendChild(swatches);
+    foot.appendChild(topRow);
+
+    var dlRow = document.createElement('div');
     dlRow.className = 'dl-row';
-    dlRow.style.marginTop = '12px';
 
-    // Download via canvas (render img + text overlay onto canvas)
-    const dlPng = document.createElement('button');
-    dlPng.className = 'dl-btn';
-    dlPng.textContent = '⬇ Download PNG';
-    dlPng.onclick = () => downloadFinal(url, i, brand, tag, brandColor, tagColor, 'png');
+    var dlBtn = document.createElement('button');
+    dlBtn.className = 'dl-btn';
+    dlBtn.textContent = 'Download PNG';
 
-    const dlJpg = document.createElement('button');
-    dlJpg.className = 'dl-btn-plain';
-    dlJpg.textContent = '⬇ JPG';
-    dlJpg.onclick = () => downloadFinal(url, i, brand, tag, brandColor, tagColor, 'jpg');
+    (function(u, idx, b, t2, bc, tc) {
+      dlBtn.onclick = function() { downloadLogo(u, idx, b, t2, bc, tc); };
+    })(url, i, brand, tag, brandCol, tagCol);
 
-    dlRow.appendChild(dlPng);
-    dlRow.appendChild(dlJpg);
+    var openBtn = document.createElement('a');
+    openBtn.className = 'dl-link';
+    openBtn.href = url;
+    openBtn.target = '_blank';
+    openBtn.textContent = 'Open Full Size';
+
+    dlRow.appendChild(dlBtn);
+    dlRow.appendChild(openBtn);
     foot.appendChild(dlRow);
-
-    card.appendChild(imgWrap);
+    card.appendChild(display);
     card.appendChild(foot);
     container.appendChild(card);
-
-    // Add to history
-    addToHistory(url, brand);
+    addHistory(url);
   });
 
-  // New logo button
-  const newBtn = document.createElement('button');
-  newBtn.className = 'new-btn';
-  newBtn.textContent = '+ Generate New Logo';
-  newBtn.onclick = () => {
+  var nb = document.createElement('button');
+  nb.className = 'new-btn';
+  nb.textContent = '+ Generate Another Logo';
+  nb.onclick = function() {
     container.style.display = 'none';
-    document.getElementById('progress').style.display = 'flex';
-    goStep(0);
-    window.scrollTo(0,0);
+    document.getElementById('prog').style.display = 'flex';
+    next(0);
+    window.scrollTo(0, 0);
   };
-  container.appendChild(newBtn);
+  container.appendChild(nb);
 }
 
-// ===== DOWNLOAD - uses canvas only at download time =====
-function downloadFinal(imgUrl, idx, brand, tag, brandColor, tagColor, fmt) {
-  const dim = 1200;
-  const canvas = document.createElement('canvas');
-  canvas.width = dim; canvas.height = dim;
-  const ctx = canvas.getContext('2d');
-
-  const img = new Image();
+function downloadLogo(imgUrl, idx, brand, tag, brandCol, tagCol) {
+  var dim = 1200;
+  var c = document.createElement('canvas');
+  c.width = dim; c.height = dim;
+  var ctx = c.getContext('2d');
+  var img = new Image();
   img.crossOrigin = 'anonymous';
-
-  img.onload = () => {
-    // White bg
+  img.onload = function() {
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, dim, dim);
-
-    // Draw logo image
-    let iconX=60, iconY=60, iconW=dim-120, iconH=dim-120;
-    const fs = selFont === 'Arial' ? 'Arial, sans-serif' : `'${selFont}', sans-serif`;
-    const brandPx = Math.round(selSize * (dim/400));
-    const tagPx = Math.round(brandPx * 0.45);
-
+    var bpx = selSize * 12;
+    var tpx = Math.round(bpx * 0.45);
+    var ff = "'" + selFont + "', sans-serif";
+    var ix = 60, iy = 60, iw = dim - 120, ih = dim - 120;
     if (brand) {
-      if (selPos === 'below') {
-        const textBlock = brandPx + 20 + (tag ? tagPx + 16 : 0) + 40;
-        iconH = dim - textBlock - 120;
-      } else if (selPos === 'above') {
-        const textBlock = brandPx + 20 + (tag ? tagPx + 16 : 0) + 40;
-        iconY = textBlock + 20;
-        iconH = dim - textBlock - 120;
-      } else if (selPos === 'right') {
-        iconW = Math.round(dim * 0.44);
-      }
+      var th = bpx + 20 + (tag ? tpx + 16 : 0);
+      if (selPos === 'below') ih = dim - th - 140;
+      else if (selPos === 'above') { iy = th + 40; ih = dim - th - 140; }
+      else if (selPos === 'right') iw = Math.round(dim * 0.44);
     }
-
-    ctx.drawImage(img, iconX, iconY, iconW, iconH);
-
+    ctx.drawImage(img, ix, iy, iw, ih);
     if (brand) {
       ctx.textBaseline = 'top';
       if (selPos === 'below') {
-        let y = iconY + iconH + 40;
-        ctx.font = `800 ${brandPx}px ${fs}`;
-        ctx.fillStyle = brandColor;
-        ctx.textAlign = 'center';
-        ctx.fillText(brand, dim/2, y);
-        if (tag) { ctx.font = `500 ${tagPx}px ${fs}`; ctx.fillStyle = tagColor; ctx.fillText(tag, dim/2, y + brandPx + 12); }
+        var ty = iy + ih + 40;
+        ctx.font = '800 ' + bpx + 'px ' + ff;
+        ctx.fillStyle = brandCol; ctx.textAlign = 'center';
+        ctx.fillText(brand, dim / 2, ty);
+        if (tag) { ctx.font = '500 ' + tpx + 'px ' + ff; ctx.fillStyle = tagCol; ctx.fillText(tag, dim / 2, ty + bpx + 14); }
       } else if (selPos === 'above') {
-        ctx.font = `800 ${brandPx}px ${fs}`;
-        ctx.fillStyle = brandColor;
-        ctx.textAlign = 'center';
-        ctx.fillText(brand, dim/2, 60);
-        if (tag) { ctx.font = `500 ${tagPx}px ${fs}`; ctx.fillStyle = tagColor; ctx.fillText(tag, dim/2, 60 + brandPx + 12); }
+        ctx.font = '800 ' + bpx + 'px ' + ff;
+        ctx.fillStyle = brandCol; ctx.textAlign = 'center';
+        ctx.fillText(brand, dim / 2, 50);
+        if (tag) { ctx.font = '500 ' + tpx + 'px ' + ff; ctx.fillStyle = tagCol; ctx.fillText(tag, dim / 2, 50 + bpx + 14); }
       } else if (selPos === 'right') {
-        const tx = iconX + iconW + 50;
-        const totalH = brandPx + (tag ? tagPx+16:0);
-        let ty = (dim - totalH) / 2;
-        ctx.font = `800 ${brandPx}px ${fs}`;
-        ctx.fillStyle = brandColor;
-        ctx.textAlign = 'left';
-        ctx.fillText(brand, tx, ty);
-        if (tag) { ctx.font = `500 ${tagPx}px ${fs}`; ctx.fillStyle = tagColor; ctx.fillText(tag, tx, ty + brandPx + 12); }
+        var tx = ix + iw + 50;
+        var total = bpx + (tag ? tpx + 16 : 0);
+        var ty2 = (dim - total) / 2;
+        ctx.font = '800 ' + bpx + 'px ' + ff;
+        ctx.fillStyle = brandCol; ctx.textAlign = 'left';
+        ctx.fillText(brand, tx, ty2);
+        if (tag) { ctx.font = '500 ' + tpx + 'px ' + ff; ctx.fillStyle = tagCol; ctx.fillText(tag, tx, ty2 + bpx + 14); }
       } else if (selPos === 'centre') {
-        const totalH = brandPx + (tag ? tagPx+16:0);
-        let ty = (dim - totalH) / 2;
-        ctx.font = `800 ${brandPx}px ${fs}`;
-        ctx.fillStyle = brandColor;
-        ctx.textAlign = 'center';
-        ctx.shadowColor = 'rgba(255,255,255,0.95)'; ctx.shadowBlur = 20;
-        ctx.fillText(brand, dim/2, ty);
+        var total2 = bpx + (tag ? tpx + 16 : 0);
+        var ty3 = (dim - total2) / 2;
+        ctx.shadowColor = 'rgba(255,255,255,0.95)'; ctx.shadowBlur = 22;
+        ctx.font = '800 ' + bpx + 'px ' + ff;
+        ctx.fillStyle = brandCol; ctx.textAlign = 'center';
+        ctx.fillText(brand, dim / 2, ty3);
         ctx.shadowBlur = 0;
-        if (tag) { ctx.font = `500 ${tagPx}px ${fs}`; ctx.fillStyle = tagColor; ctx.shadowColor='rgba(255,255,255,0.9)'; ctx.shadowBlur=12; ctx.fillText(tag, dim/2, ty+brandPx+12); ctx.shadowBlur=0; }
+        if (tag) {
+          ctx.shadowColor = 'rgba(255,255,255,0.9)'; ctx.shadowBlur = 14;
+          ctx.font = '500 ' + tpx + 'px ' + ff;
+          ctx.fillStyle = tagCol;
+          ctx.fillText(tag, dim / 2, ty3 + bpx + 14);
+          ctx.shadowBlur = 0;
+        }
       }
     }
-
-    const mime = fmt === 'jpg' ? 'image/jpeg' : 'image/png';
-    const ext = fmt === 'jpg' ? '.jpg' : '.png';
-    const a = document.createElement('a');
-    a.href = canvas.toDataURL(mime, 0.95);
-    a.download = (brand||'logo').replace(/\s+/g,'-').toLowerCase() + '-logo-' + (idx+1) + ext;
+    var a = document.createElement('a');
+    a.href = c.toDataURL('image/png');
+    a.download = (brand || 'logo').replace(/\s+/g, '-').toLowerCase() + '-' + (idx + 1) + '.png';
     a.click();
   };
-
-  img.onerror = () => {
-    // If CORS blocks canvas, fall back to direct URL download
-    const a = document.createElement('a');
-    a.href = imgUrl;
-    a.target = '_blank';
-    a.download = 'logo-' + (idx+1) + '.png';
-    a.click();
+  img.onerror = function() {
+    alert('To save: tap Open Full Size then long-press the image to save it.');
   };
-
-  img.src = imgUrl + (imgUrl.includes('?') ? '&' : '?') + 'cb=' + Date.now();
+  img.src = imgUrl;
 }
 
-// ===== HISTORY =====
-function addToHistory(url, brand) {
-  history.push({url, brand});
-  const sec = document.getElementById('history-section');
-  const grid = document.getElementById('history-grid');
-  sec.style.display = 'block';
-
-  const thumb = document.createElement('div');
-  thumb.className = 'history-thumb';
-  thumb.title = brand || 'Logo';
-  const img = document.createElement('img');
+function addHistory(url) {
+  document.getElementById('history-wrap').style.display = 'block';
+  var grid = document.getElementById('history-grid');
+  var t = document.createElement('div');
+  t.className = 'hist-thumb';
+  var img = document.createElement('img');
   img.src = url;
-  img.alt = brand || 'Logo';
-  thumb.appendChild(img);
-
-  // Click to view full size
-  thumb.onclick = () => window.open(url, '_blank');
-  grid.insertBefore(thumb, grid.firstChild);
+  t.appendChild(img);
+  t.onclick = (function(u) { return function() { window.open(u, '_blank'); }; })(url);
+  grid.insertBefore(t, grid.firstChild);
 }
 
-// ===== ERROR =====
 function showErr(msg) {
-  const b = document.getElementById('err-box');
+  var b = document.getElementById('err-box');
   b.style.display = 'block';
-  if (msg.includes('401') || msg.includes('Incorrect API key') || msg.includes('invalid_api_key')) {
-    b.innerHTML = '🔑 <strong>Wrong API key.</strong> Check it\'s correct and tap Save again.';
-  } else if (msg.includes('429')) {
+  var m = msg.toLowerCase();
+  if (m.includes('401') || m.includes('403') || m.includes('api key') || m.includes('invalid')) {
+    b.innerHTML = '🔑 <strong>Invalid API key.</strong> Check it and tap Save again.';
+  } else if (m.includes('429')) {
     b.innerHTML = '⏳ <strong>Too many requests.</strong> Wait 30 seconds and try again.';
-  } else if (msg.includes('billing') || msg.includes('quota') || msg.includes('exceeded') || msg.includes('insufficient')) {
-    b.innerHTML = '💳 <strong>Out of credit.</strong> Add more at <a href="https://platform.openai.com/account/billing" target="_blank" style="color:#6c63ff">platform.openai.com → Billing</a>.';
+  } else if (m.includes('credit') || m.includes('quota') || m.includes('billing') || m.includes('insufficient')) {
+    b.innerHTML = '💳 <strong>Out of credits.</strong> Add more at <a href="https://platform.ideogram.ai/manage-api" target="_blank" style="color:#6c63ff">platform.openai.com</a>.';
   } else {
-    b.innerHTML = `⚠️ ${msg}. Please try again.`;
+    b.innerHTML = '⚠️ ' + msg + '. Please try again.';
   }
 }
 </script>
