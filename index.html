@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>LogoForge — Ideogram V3</title>
+<title>LogoForge</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Playfair+Display:wght@700;900&family=Oswald:wght@600;700&family=Raleway:wght@700;800&family=Roboto:wght@700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -28,65 +28,76 @@ body{background:#0d0d1a;color:#f0f0ff;font-family:-apple-system,BlinkMacSystemFo
 .key-note{font-size:11px;color:#4a4a70;margin-top:8px;line-height:1.5}
 .key-note a{color:#6c63ff}
 .key-ok{font-size:12px;color:#4caf50;margin-top:6px;display:none}
-.progress{display:flex;gap:6px;justify-content:center;margin-bottom:20px}
-.pd{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.1);transition:all 0.2s}
-.pd.on{background:#6c63ff}
-.pd.done{background:#4caf50}
-.step{background:#161628;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:18px;margin-bottom:14px;display:none}
-.step.active{display:block}
-.step-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#6c63ff;margin-bottom:8px}
-.step-title{font-size:18px;font-weight:700;margin-bottom:16px}
+
+/* MODE TABS */
+.mode-tabs{display:flex;gap:8px;margin-bottom:16px}
+.mode-tab{flex:1;padding:12px;border:1px solid rgba(255,255,255,0.08);background:#161628;color:#7070a0;border-radius:12px;cursor:pointer;font-size:14px;font-weight:600;font-family:inherit;text-align:center;transition:all 0.15s}
+.mode-tab.on{border-color:#6c63ff;background:rgba(108,99,255,0.15);color:#6c63ff}
+
+.card{background:#161628;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:20px;margin-bottom:14px}
+.card-title{font-size:20px;font-weight:800;margin-bottom:16px}
+.field-label{font-size:11px;color:#7070a0;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
 textarea{width:100%;background:#0d0d1a;border:1px solid rgba(255,255,255,0.08);color:#f0f0ff;padding:12px;border-radius:10px;font-size:15px;outline:none;font-family:inherit;resize:vertical;min-height:100px;line-height:1.6}
 textarea:focus{border-color:#6c63ff}
-input[type=text]{width:100%;background:#0d0d1a;border:1px solid rgba(255,255,255,0.08);color:#f0f0ff;padding:11px 13px;border-radius:10px;font-size:15px;outline:none;font-family:inherit}
-input[type=text]:focus{border-color:#6c63ff}
-.hint{font-size:12px;color:#4a4a70;margin-top:8px;line-height:1.5}
-.field{margin-bottom:16px}
-.field-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#7070a0;margin-bottom:8px}
-.opts{display:flex;flex-wrap:wrap;gap:8px}
-.opt{padding:9px 15px;border:1px solid rgba(255,255,255,0.08);background:#0d0d1a;color:#a0a0c0;border-radius:10px;cursor:pointer;font-size:13px;font-weight:500;font-family:inherit}
-.opt.on{border-color:#6c63ff;background:rgba(108,99,255,0.15);color:#6c63ff}
-.opt.font-opt{min-width:130px;text-align:center;font-size:14px}
-.color-row{display:flex;gap:10px;flex-wrap:wrap}
-.color-box{display:flex;align-items:center;gap:8px;background:#0d0d1a;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:9px 12px;flex:1}
-input[type=color]{width:30px;height:30px;border:none;border-radius:6px;cursor:pointer;background:none;padding:0}
-.color-box span{font-size:12px;color:#7070a0}
-.next-btn{width:100%;padding:14px;background:linear-gradient(135deg,#6c63ff,#9b59ff);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:14px}
-.back-btn{width:100%;padding:11px;background:transparent;color:#7070a0;border:1px solid rgba(255,255,255,0.08);border-radius:12px;font-size:14px;cursor:pointer;font-family:inherit;margin-top:8px}
+
+/* IMAGE UPLOAD */
+.upload-area{border:2px dashed rgba(108,99,255,0.3);border-radius:12px;padding:24px;text-align:center;cursor:pointer;background:#0d0d1a;transition:all 0.2s;margin-bottom:14px;position:relative}
+.upload-area:hover{border-color:#6c63ff;background:rgba(108,99,255,0.05)}
+.upload-area input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-icon{font-size:32px;margin-bottom:8px}
+.upload-text{font-size:14px;color:#7070a0}
+.upload-text strong{color:#6c63ff}
+.upload-preview{width:100%;border-radius:10px;margin-bottom:14px;display:none;max-height:200px;object-fit:contain;background:#fff}
+.upload-clear{width:100%;padding:10px;background:transparent;color:#ff6584;border:1px solid rgba(255,101,132,0.2);border-radius:10px;font-size:13px;cursor:pointer;font-family:inherit;margin-bottom:14px;display:none}
+
+/* STRENGTH SLIDER */
+.slider-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.slider-row input[type=range]{flex:1;accent-color:#6c63ff}
+.slider-val{font-size:13px;color:#6c63ff;font-weight:700;min-width:36px;text-align:right}
+.slider-labels{display:flex;justify-content:space-between;font-size:11px;color:#4a4a70;margin-top:4px}
+
+.count-label{font-size:11px;color:#7070a0;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.count-row{display:flex;gap:8px;margin-bottom:4px}
+.count-btn{flex:1;padding:12px;border:1px solid rgba(255,255,255,0.08);background:#0d0d1a;color:#a0a0c0;border-radius:10px;cursor:pointer;font-size:15px;font-weight:700;font-family:inherit}
+.count-btn.on{border-color:#6c63ff;background:rgba(108,99,255,0.15);color:#6c63ff}
 .gen-btn{width:100%;padding:16px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;border:none;border-radius:12px;font-size:17px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:14px}
-#summary{background:#0d0d1a;border-radius:10px;padding:14px;font-size:13px;color:#a0a0c0;line-height:1.9}
+.next-btn{width:100%;padding:14px;background:linear-gradient(135deg,#6c63ff,#9b59ff);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:14px}
+
+.followup{background:#161628;border:1px solid rgba(108,99,255,0.3);border-radius:16px;padding:18px;margin-bottom:14px;display:none}
+.followup-title{font-size:13px;color:#6c63ff;font-weight:700;margin-bottom:12px;text-transform:uppercase;letter-spacing:1px}
+.fq{margin-bottom:14px}
+.fq-label{font-size:14px;color:#c0c0e0;font-weight:600;margin-bottom:8px}
+.fq-opts{display:flex;flex-wrap:wrap;gap:7px}
+.fq-opt{padding:8px 14px;border:1px solid rgba(255,255,255,0.08);background:#0d0d1a;color:#a0a0c0;border-radius:9px;cursor:pointer;font-size:13px;font-weight:500;font-family:inherit}
+.fq-opt.on{border-color:#6c63ff;background:rgba(108,99,255,0.15);color:#6c63ff}
+.skip-btn{width:100%;padding:11px;background:transparent;color:#7070a0;border:1px solid rgba(255,255,255,0.08);border-radius:12px;font-size:14px;cursor:pointer;font-family:inherit;margin-top:6px}
+
 #generating{display:none;text-align:center;padding:44px 20px;background:#161628;border:1px solid rgba(255,255,255,0.08);border-radius:16px;margin-bottom:14px}
 .spinner{width:44px;height:44px;border:3px solid rgba(255,255,255,0.08);border-top-color:#6c63ff;border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto 14px}
 @keyframes spin{to{transform:rotate(360deg)}}
 #gen-status{font-size:14px;color:#7070a0;line-height:1.8}
 #results{display:none}
 .result-card{background:#161628;border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;margin-bottom:16px}
-.logo-display{width:100%;position:relative;background:#ffffff;overflow:hidden;line-height:0}
+.logo-display{width:100%;position:relative;background:#fff;line-height:0}
 .logo-display img{width:100%;display:block}
-.text-layer{position:absolute;inset:0;display:flex;pointer-events:none;padding:16px}
-.text-layer.below{flex-direction:column;align-items:center;justify-content:flex-end}
-.text-layer.above{flex-direction:column;align-items:center;justify-content:flex-start}
-.text-layer.right{flex-direction:column;align-items:flex-end;justify-content:center}
-.text-layer.centre{flex-direction:column;align-items:center;justify-content:center}
-.overlay-brand{font-weight:800;line-height:1.1;text-align:center;word-break:break-word}
-.overlay-tag{font-weight:500;margin-top:4px;text-align:center;opacity:0.85;word-break:break-word}
 .result-foot{padding:14px}
 .result-foot-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .result-num{font-size:12px;color:#7070a0;font-weight:600}
 .bg-swatches{display:flex;gap:6px}
 .bg-sw{width:24px;height:24px;border-radius:5px;cursor:pointer;border:2px solid transparent}
 .bg-sw.on{border-color:#6c63ff}
-.dl-row{display:flex;gap:8px;margin-top:12px}
-.dl-btn{flex:1;padding:12px;background:linear-gradient(135deg,#6c63ff,#9b59ff);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
-.dl-link{flex:1;padding:12px;background:#0d0d1a;color:#c0c0e0;border:1px solid rgba(255,255,255,0.1);border-radius:10px;font-size:13px;font-weight:600;text-decoration:none;display:flex;align-items:center;justify-content:center}
+.dl-btn{width:100%;padding:12px;background:linear-gradient(135deg,#6c63ff,#9b59ff);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;text-decoration:none;display:flex;align-items:center;justify-content:center}
 .new-btn{width:100%;padding:14px;background:#161628;color:#6c63ff;border:1px solid rgba(108,99,255,0.3);border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:6px}
+.save-note{background:rgba(108,99,255,0.08);border:1px solid rgba(108,99,255,0.2);border-radius:12px;padding:14px;margin-bottom:14px;font-size:13px;color:#a0a0c0;line-height:1.6;display:none}
+.save-note strong{color:#6c63ff}
 .err{background:rgba(255,101,132,0.08);border:1px solid rgba(255,101,132,0.2);border-radius:12px;padding:14px;margin-bottom:14px;font-size:13px;color:#ff6584;line-height:1.6;display:none}
-#history-wrap{margin-top:30px;display:none}
+#history-wrap{margin-top:24px;display:none}
 .history-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#7070a0;margin-bottom:12px}
 .history-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .hist-thumb{border-radius:10px;overflow:hidden;cursor:pointer;border:2px solid transparent;aspect-ratio:1;background:#fff}
 .hist-thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .hist-thumb:hover{border-color:#6c63ff}
+.hist-note{font-size:11px;color:#4a4a70;margin-top:8px;text-align:center}
 </style>
 </head>
 <body>
@@ -102,7 +113,7 @@ input[type=color]{width:30px;height:30px;border:none;border-radius:6px;cursor:po
 
 <div id="app">
   <div class="app-title">Logo<span>Forge</span></div>
-  <p class="app-sub">Powered by OpenAI Ideogram V3 — ~5p per logo</p>
+  <p class="app-sub">Powered by Ideogram V3 — ~5p per logo</p>
 
   <div class="key-wrap">
     <div class="key-wrap-title">Ideogram API Key</div>
@@ -114,141 +125,127 @@ input[type=color]{width:30px;height:30px;border:none;border-radius:6px;cursor:po
     <div class="key-ok" id="key-ok">✅ Key saved — ready to generate</div>
   </div>
 
-  <div class="progress" id="prog">
-    <div class="pd on" id="pd0"></div>
-    <div class="pd" id="pd1"></div>
-    <div class="pd" id="pd2"></div>
-    <div class="pd" id="pd3"></div>
+  <!-- MODE TABS -->
+  <div class="mode-tabs">
+    <button class="mode-tab on" id="tab-generate" onclick="switchMode('generate')">✨ Generate New</button>
+    <button class="mode-tab" id="tab-remix" onclick="switchMode('remix')">🔄 Improve Existing</button>
   </div>
 
-  <div class="step active" id="step0">
-    <div class="step-label">Step 1 of 4</div>
-    <div class="step-title">Describe your logo</div>
-    <textarea id="prompt" placeholder="e.g. A bold professional logo for a plumbing company called Apex Plumbing. Blue and orange colours, strong and trustworthy feel."></textarea>
-    <div class="hint">Include the company name, industry, colours, and style. More detail = better results.</div>
-    <button class="next-btn" onclick="next(1)">Next →</button>
+  <!-- GENERATE MODE -->
+  <div id="mode-generate">
+    <div class="card" id="main-card">
+      <div class="card-title">Describe your logo</div>
+      <textarea id="prompt" placeholder="e.g. A plumbing company called Apex Plumbing. Blue and orange colours, bold and professional."></textarea>
+      <div class="count-label" style="margin-top:16px">How many logos?</div>
+      <div class="count-row">
+        <button class="count-btn on" data-n="1" onclick="setCount(this)">1</button>
+        <button class="count-btn" data-n="2" onclick="setCount(this)">2</button>
+        <button class="count-btn" data-n="3" onclick="setCount(this)">3</button>
+      </div>
+      <button class="next-btn" onclick="showFollowUp()">Next →</button>
+    </div>
+
+    <div class="followup" id="followup">
+      <div class="followup-title">✨ Quick questions to improve your logo</div>
+      <div class="fq">
+        <div class="fq-label">Style</div>
+        <div class="fq-opts" id="fq-style">
+          <button class="fq-opt on" data-v="modern minimal clean">Modern Minimal</button>
+          <button class="fq-opt" data-v="bold strong powerful">Bold &amp; Strong</button>
+          <button class="fq-opt" data-v="luxury elegant premium">Luxury</button>
+          <button class="fq-opt" data-v="playful fun friendly">Playful</button>
+          <button class="fq-opt" data-v="vintage retro classic">Vintage</button>
+          <button class="fq-opt" data-v="tech futuristic digital">Tech</button>
+          <button class="fq-opt" data-v="geometric abstract sharp">Geometric</button>
+        </div>
+      </div>
+      <div class="fq">
+        <div class="fq-label">Logo Type</div>
+        <div class="fq-opts" id="fq-type">
+          <button class="fq-opt on" data-v="icon symbol only no text">Icon / Symbol</button>
+          <button class="fq-opt" data-v="badge emblem crest">Badge / Emblem</button>
+          <button class="fq-opt" data-v="monogram initials letters">Monogram</button>
+          <button class="fq-opt" data-v="mascot character">Mascot</button>
+          <button class="fq-opt" data-v="abstract geometric">Abstract</button>
+        </div>
+      </div>
+      <div class="fq">
+        <div class="fq-label">Background</div>
+        <div class="fq-opts" id="fq-bg">
+          <button class="fq-opt on" data-v="white background">White</button>
+          <button class="fq-opt" data-v="transparent background">Transparent</button>
+          <button class="fq-opt" data-v="dark black background">Dark</button>
+        </div>
+      </div>
+      <button class="gen-btn" onclick="generate()">⚡ Generate Logo</button>
+      <button class="skip-btn" onclick="generate()">Skip &amp; generate</button>
+    </div>
   </div>
 
-  <div class="step" id="step1">
-    <div class="step-label">Step 2 of 4</div>
-    <div class="step-title">Choose a style</div>
-    <div class="field">
-      <div class="field-label">Visual Style</div>
-      <div class="opts" id="style-opts">
-        <div class="opt on" data-v="modern minimal clean flat">Modern Minimal</div>
-        <div class="opt" data-v="bold industrial strong powerful">Bold &amp; Strong</div>
-        <div class="opt" data-v="luxury premium elegant sophisticated">Luxury</div>
-        <div class="opt" data-v="playful fun friendly colourful">Playful</div>
-        <div class="opt" data-v="vintage retro classic heritage">Vintage Retro</div>
-        <div class="opt" data-v="futuristic tech neon digital">Tech / Future</div>
-        <div class="opt" data-v="organic natural earthy handcrafted">Organic</div>
-        <div class="opt" data-v="geometric abstract sharp angular">Geometric</div>
-      </div>
-    </div>
-    <div class="field">
-      <div class="field-label">Logo Type</div>
-      <div class="opts" id="type-opts">
-        <div class="opt on" data-v="icon symbol graphic mark no text">Icon / Symbol</div>
-        <div class="opt" data-v="badge emblem crest shield circular">Badge / Emblem</div>
-        <div class="opt" data-v="monogram large letter initials">Monogram</div>
-        <div class="opt" data-v="abstract geometric shape mark">Abstract</div>
-        <div class="opt" data-v="mascot character animal illustration">Mascot</div>
-      </div>
-    </div>
-    <div class="field">
-      <div class="field-label">How Many Logos</div>
-      <div class="opts" id="count-opts">
-        <div class="opt on" data-n="1">1</div>
-        <div class="opt" data-n="2">2</div>
-        <div class="opt" data-n="3">3</div>
-      </div>
-    </div>
-    <button class="next-btn" onclick="next(2)">Next →</button>
-    <button class="back-btn" onclick="next(0)">← Back</button>
-  </div>
+  <!-- REMIX MODE -->
+  <div id="mode-remix" style="display:none">
+    <div class="card">
+      <div class="card-title">Improve an existing logo</div>
 
-  <div class="step" id="step2">
-    <div class="step-label">Step 3 of 4</div>
-    <div class="step-title">Add text to your logo</div>
-    <div class="field">
-      <div class="field-label">Brand Name (leave blank to skip)</div>
-      <input type="text" id="txt-brand" placeholder="e.g. Apex Plumbing" />
-    </div>
-    <div class="field">
-      <div class="field-label">Tagline (optional)</div>
-      <input type="text" id="txt-tag" placeholder="e.g. Fast &amp; Reliable" />
-    </div>
-    <div class="field">
-      <div class="field-label">Font</div>
-      <div class="opts" id="font-opts">
-        <div class="opt font-opt on" data-f="Montserrat" style="font-family:'Montserrat',sans-serif;font-weight:800">Montserrat</div>
-        <div class="opt font-opt" data-f="Playfair Display" style="font-family:'Playfair Display',serif">Playfair</div>
-        <div class="opt font-opt" data-f="Oswald" style="font-family:'Oswald',sans-serif;font-weight:700">Oswald</div>
-        <div class="opt font-opt" data-f="Raleway" style="font-family:'Raleway',sans-serif;font-weight:800">Raleway</div>
-        <div class="opt font-opt" data-f="Roboto" style="font-family:'Roboto',sans-serif;font-weight:700">Roboto</div>
-        <div class="opt font-opt" data-f="Arial" style="font-family:Arial,sans-serif;font-weight:700">Arial Bold</div>
+      <div class="field-label">Upload your logo</div>
+      <img id="upload-preview" class="upload-preview" alt="Preview" />
+      <button class="upload-clear" id="upload-clear" onclick="clearUpload()">✕ Remove image</button>
+      <div class="upload-area" id="upload-area">
+        <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" onchange="handleFile(this)" />
+        <div class="upload-icon">📁</div>
+        <div class="upload-text"><strong>Click to upload</strong> or drag and drop<br>JPEG, PNG or WebP — max 10MB</div>
       </div>
-    </div>
-    <div class="field">
-      <div class="field-label">Text Position</div>
-      <div class="opts" id="pos-opts">
-        <div class="opt on" data-p="below">Below Icon</div>
-        <div class="opt" data-p="above">Above Icon</div>
-        <div class="opt" data-p="right">Right of Icon</div>
-        <div class="opt" data-p="centre">Centre</div>
-      </div>
-    </div>
-    <div class="field">
-      <div class="field-label">Text Size</div>
-      <div class="opts" id="size-opts">
-        <div class="opt" data-s="3">Small</div>
-        <div class="opt on" data-s="5">Medium</div>
-        <div class="opt" data-s="7">Large</div>
-        <div class="opt" data-s="9">X-Large</div>
-      </div>
-    </div>
-    <div class="field">
-      <div class="field-label">Text Colour</div>
-      <div class="color-row">
-        <div class="color-box"><input type="color" id="brand-col" value="#111122" /><span>Brand name</span></div>
-        <div class="color-box"><input type="color" id="tag-col" value="#555577" /><span>Tagline</span></div>
-      </div>
-    </div>
-    <button class="next-btn" onclick="next(3)">Next →</button>
-    <button class="back-btn" onclick="next(1)">← Back</button>
-  </div>
 
-  <div class="step" id="step3">
-    <div class="step-label">Step 4 of 4</div>
-    <div class="step-title">Ready to generate</div>
-    <div id="summary"></div>
-    <div style="font-size:12px;color:#4a4a70;margin-top:10px">Each logo costs ~5p. Make sure your Ideogram account has credit.</div>
-    <button class="gen-btn" onclick="generate()">⚡ Generate Logo</button>
-    <button class="back-btn" onclick="next(2)">← Back</button>
+      <div class="field-label">What do you want to change?</div>
+      <textarea id="remix-prompt" placeholder="e.g. Make it more modern, change colours to blue and white, make the icon bolder." style="min-height:80px"></textarea>
+
+      <div class="field-label" style="margin-top:14px">How much to change? <span style="color:#4a4a70;font-weight:400">(1 = keep original, 100 = fully reimagine)</span></div>
+      <div class="slider-row">
+        <input type="range" id="image-weight" min="1" max="100" value="50" oninput="document.getElementById('weight-val').textContent=this.value" />
+        <span class="slider-val" id="weight-val">50</span>
+      </div>
+      <div class="slider-labels"><span>Keep original</span><span>Fully reimagine</span></div>
+
+      <div class="count-label" style="margin-top:16px">How many variations?</div>
+      <div class="count-row">
+        <button class="count-btn on" data-n="1" onclick="setRemixCount(this)">1</button>
+        <button class="count-btn" data-n="2" onclick="setRemixCount(this)">2</button>
+        <button class="count-btn" data-n="3" onclick="setRemixCount(this)">3</button>
+      </div>
+
+      <button class="gen-btn" onclick="remix()">🔄 Improve Logo</button>
+    </div>
   </div>
 
   <div id="generating">
     <div class="spinner"></div>
-    <div id="gen-status">Sending to Ideogram V3…<br><span style="font-size:11px;color:#4a4a70">Takes about 15-20 seconds per logo</span></div>
+    <div id="gen-status">Processing…<br><span style="font-size:11px;color:#4a4a70">Takes about 15–20 seconds</span></div>
   </div>
 
   <div class="err" id="err-box"></div>
+
+  <div class="save-note" id="save-note">
+    <strong>💾 Save your logos now!</strong> These links expire in a few hours. Click "Open Full Size" and save to your device.
+  </div>
+
   <div id="results"></div>
 
   <div id="history-wrap">
-    <div class="history-label">All Generated Logos</div>
+    <div class="history-label">📁 All logos this session</div>
     <div class="history-grid" id="history-grid"></div>
+    <div class="hist-note">Tap any thumbnail to open. Save before closing this tab!</div>
   </div>
 </div>
 
 <script>
 var KEY_STORAGE = 'lf_ideogram_key';
-var selStyle = 'modern minimal clean flat';
-var selType = 'icon symbol graphic mark no text';
 var selCount = 1;
-var selFont = 'Montserrat';
-var selPos = 'below';
-var selSize = 5;
+var selRemixCount = 1;
+var selStyle = 'modern minimal clean';
+var selType = 'icon symbol only no text';
+var selBg = 'white background';
+var uploadedFile = null;
+var currentMode = 'generate';
 
 document.addEventListener('DOMContentLoaded', function() {
   if (sessionStorage.getItem('lf_ok') === '1') unlock();
@@ -261,90 +258,112 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function checkPw() {
   if (document.getElementById('pw').value === 'Atg9341poL') {
-    unlock();
-    sessionStorage.setItem('lf_ok', '1');
+    unlock(); sessionStorage.setItem('lf_ok', '1');
   } else {
     document.getElementById('pw-err').style.display = 'block';
     document.getElementById('pw').value = '';
   }
 }
-
 function unlock() {
   document.getElementById('lock').style.display = 'none';
   document.getElementById('app').style.display = 'block';
 }
-
 function saveKey() {
   var k = document.getElementById('key-input').value.trim();
   if (!k) return;
   localStorage.setItem(KEY_STORAGE, k);
   document.getElementById('key-ok').style.display = 'block';
 }
+function getKey() { return localStorage.getItem(KEY_STORAGE) || ''; }
 
-function getKey() {
-  return localStorage.getItem(KEY_STORAGE) || '';
+function switchMode(mode) {
+  currentMode = mode;
+  document.getElementById('tab-generate').classList.toggle('on', mode === 'generate');
+  document.getElementById('tab-remix').classList.toggle('on', mode === 'remix');
+  document.getElementById('mode-generate').style.display = mode === 'generate' ? 'block' : 'none';
+  document.getElementById('mode-remix').style.display = mode === 'remix' ? 'block' : 'none';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('save-note').style.display = 'none';
+  document.getElementById('err-box').style.display = 'none';
 }
 
-function wire(id, fn) {
+function setCount(btn) {
+  document.querySelectorAll('#mode-generate .count-btn').forEach(function(b) { b.classList.remove('on'); });
+  btn.classList.add('on');
+  selCount = parseInt(btn.dataset.n);
+}
+function setRemixCount(btn) {
+  document.querySelectorAll('#mode-remix .count-btn').forEach(function(b) { b.classList.remove('on'); });
+  btn.classList.add('on');
+  selRemixCount = parseInt(btn.dataset.n);
+}
+
+function wireOpts(id, setter) {
   document.getElementById(id).addEventListener('click', function(e) {
-    var t = e.target.closest('.opt');
+    var t = e.target.closest('.fq-opt');
     if (!t) return;
-    document.querySelectorAll('#' + id + ' .opt').forEach(function(o) { o.classList.remove('on'); });
+    document.querySelectorAll('#' + id + ' .fq-opt').forEach(function(o) { o.classList.remove('on'); });
     t.classList.add('on');
-    fn(t);
+    setter(t.dataset.v);
   });
 }
+wireOpts('fq-style', function(v) { selStyle = v; });
+wireOpts('fq-type', function(v) { selType = v; });
+wireOpts('fq-bg', function(v) { selBg = v; });
 
-wire('style-opts', function(t) { selStyle = t.dataset.v; });
-wire('type-opts', function(t) { selType = t.dataset.v; });
-wire('count-opts', function(t) { selCount = parseInt(t.dataset.n); });
-wire('font-opts', function(t) { selFont = t.dataset.f; });
-wire('pos-opts', function(t) { selPos = t.dataset.p; });
-wire('size-opts', function(t) { selSize = parseInt(t.dataset.s); });
-
-function next(n) {
-  if (n === 1 && !document.getElementById('prompt').value.trim()) {
+function showFollowUp() {
+  if (!document.getElementById('prompt').value.trim()) {
     alert('Please describe your logo first.');
     return;
   }
-  if (n === 3) buildSummary();
-  document.querySelectorAll('.step').forEach(function(s, i) {
-    s.classList.toggle('active', i === n);
-  });
-  for (var i = 0; i < 4; i++) {
-    var d = document.getElementById('pd' + i);
-    d.className = 'pd' + (i < n ? ' done' : i === n ? ' on' : '');
-  }
-  window.scrollTo(0, 0);
+  document.getElementById('followup').style.display = 'block';
+  document.getElementById('followup').scrollIntoView({ behavior: 'smooth' });
 }
 
-function buildSummary() {
-  var brand = document.getElementById('txt-brand').value.trim();
-  var tag = document.getElementById('txt-tag').value.trim();
-  var text = brand ? ('Text: ' + brand + (tag ? ' · ' + tag : '') + ' · ' + selFont + ' · ' + selPos) : 'Text: None';
-  document.getElementById('summary').innerHTML =
-    '<b style="color:#f0f0ff">Description:</b> ' + document.getElementById('prompt').value.trim() + '<br>' +
-    '<b style="color:#f0f0ff">Style:</b> ' + selStyle.split(' ')[0] + ' · <b style="color:#f0f0ff">Type:</b> ' + selType.split(' ')[0] + '<br>' +
-    '<b style="color:#f0f0ff">Logos:</b> ' + selCount + '<br>' +
-    '<b style="color:#f0f0ff">' + text + '</b>';
+function handleFile(input) {
+  var file = input.files[0];
+  if (!file) return;
+  uploadedFile = file;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var preview = document.getElementById('upload-preview');
+    preview.src = e.target.result;
+    preview.style.display = 'block';
+    document.getElementById('upload-clear').style.display = 'block';
+    document.getElementById('upload-area').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearUpload() {
+  uploadedFile = null;
+  document.getElementById('upload-preview').style.display = 'none';
+  document.getElementById('upload-clear').style.display = 'none';
+  document.getElementById('upload-area').style.display = 'block';
+  document.getElementById('file-input').value = '';
+}
+
+function startGenerating() {
+  document.getElementById('main-card').style.display = 'none';
+  document.getElementById('followup').style.display = 'none';
+  document.getElementById('mode-remix').style.display = 'none';
+  document.getElementById('generating').style.display = 'block';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('err-box').style.display = 'none';
+  document.getElementById('save-note').style.display = 'none';
+}
+
+function stopGenerating() {
+  document.getElementById('generating').style.display = 'none';
 }
 
 async function generate() {
   var key = getKey();
-  if (!key) { alert('Please save your OpenAI API key first.'); return; }
-
+  if (!key) { alert('Please save your Ideogram API key first.'); return; }
   var promptText = document.getElementById('prompt').value.trim();
-  var brand = document.getElementById('txt-brand').value.trim();
-  var tag = document.getElementById('txt-tag').value.trim();
-  var brandCol = document.getElementById('brand-col').value;
-  var tagCol = document.getElementById('tag-col').value;
+  if (!promptText) { alert('Please describe your logo.'); return; }
 
-  document.querySelectorAll('.step').forEach(function(s) { s.classList.remove('active'); });
-  document.getElementById('prog').style.display = 'none';
-  document.getElementById('generating').style.display = 'block';
-  document.getElementById('results').style.display = 'none';
-  document.getElementById('err-box').style.display = 'none';
-
+  startGenerating();
   var vars = ['clean and refined', 'bold and striking', 'creative and distinctive'];
   var urls = [];
 
@@ -352,7 +371,7 @@ async function generate() {
     document.getElementById('gen-status').innerHTML =
       'Generating logo ' + (i + 1) + ' of ' + selCount + '...<br><span style="font-size:11px;color:#4a4a70">~15-20 seconds</span>';
 
-    var p = 'Professional logo design. ' + promptText + '. Style: ' + selStyle + '. Type: ' + selType + '. ' + vars[i % 3] + '. Pure white background. High quality flat vector graphic. No text or words in image. Clean, scalable, memorable.';
+    var p = 'Professional logo design. ' + promptText + '. Style: ' + selStyle + '. Type: ' + selType + '. ' + selBg + '. ' + vars[i % 3] + '. High quality graphic design. Clean, scalable, memorable.';
 
     try {
       var res = await fetch('https://logoforge-proxy.onrender.com/generate', {
@@ -361,23 +380,67 @@ async function generate() {
         body: JSON.stringify({ prompt: p, rendering_speed: 'DEFAULT', style_type: 'DESIGN', aspect_ratio: '1x1' })
       });
       var data = await res.json();
-      if (!res.ok) throw new Error(data && data.detail ? data.detail : 'API error');
-      if (!data.data || !data.data[0] || !data.data[0].url) throw new Error('No image returned from Ideogram.');
+      if (!res.ok) throw new Error(data && data.detail ? data.detail : 'API error ' + res.status);
+      if (!data.data || !data.data[0] || !data.data[0].url) throw new Error('No image returned.');
       urls.push(data.data[0].url);
     } catch(e) {
-      document.getElementById('generating').style.display = 'none';
+      stopGenerating();
       showErr(e.message);
-      document.getElementById('prog').style.display = 'flex';
-      next(3);
+      document.getElementById('main-card').style.display = 'block';
       return;
     }
   }
-
-  document.getElementById('generating').style.display = 'none';
-  showResults(urls, brand, tag, brandCol, tagCol);
+  stopGenerating();
+  document.getElementById('save-note').style.display = 'block';
+  showResults(urls);
 }
 
-function showResults(urls, brand, tag, brandCol, tagCol) {
+async function remix() {
+  var key = getKey();
+  if (!key) { alert('Please save your Ideogram API key first.'); return; }
+  if (!uploadedFile) { alert('Please upload a logo image first.'); return; }
+  var promptText = document.getElementById('remix-prompt').value.trim();
+  if (!promptText) { alert('Please describe what you want to change.'); return; }
+  var imageWeight = document.getElementById('image-weight').value;
+
+  startGenerating();
+  var urls = [];
+
+  for (var i = 0; i < selRemixCount; i++) {
+    document.getElementById('gen-status').innerHTML =
+      'Improving logo ' + (i + 1) + ' of ' + selRemixCount + '...<br><span style="font-size:11px;color:#4a4a70">~15-20 seconds</span>';
+
+    try {
+      var form = new FormData();
+      form.append('image', uploadedFile);
+      form.append('prompt', 'Professional logo design. ' + promptText + '. High quality graphic design. Clean and scalable.');
+      form.append('rendering_speed', 'DEFAULT');
+      form.append('style_type', 'DESIGN');
+      form.append('aspect_ratio', '1x1');
+      form.append('image_weight', imageWeight);
+
+      var res = await fetch('https://logoforge-proxy.onrender.com/remix', {
+        method: 'POST',
+        headers: { 'x-api-key': key },
+        body: form
+      });
+      var data = await res.json();
+      if (!res.ok) throw new Error(data && data.detail ? data.detail : data.error || 'API error ' + res.status);
+      if (!data.data || !data.data[0] || !data.data[0].url) throw new Error('No image returned.');
+      urls.push(data.data[0].url);
+    } catch(e) {
+      stopGenerating();
+      showErr(e.message);
+      document.getElementById('mode-remix').style.display = 'block';
+      return;
+    }
+  }
+  stopGenerating();
+  document.getElementById('save-note').style.display = 'block';
+  showResults(urls);
+}
+
+function showResults(urls) {
   var container = document.getElementById('results');
   container.innerHTML = '';
   container.style.display = 'block';
@@ -395,32 +458,6 @@ function showResults(urls, brand, tag, brandCol, tagCol) {
     img.alt = 'Logo ' + (i + 1);
     display.appendChild(img);
 
-    if (brand) {
-      var layer = document.createElement('div');
-      layer.className = 'text-layer ' + selPos;
-
-      var brandEl = document.createElement('div');
-      brandEl.className = 'overlay-brand';
-      brandEl.textContent = brand;
-      brandEl.style.fontFamily = "'" + selFont + "', sans-serif";
-      brandEl.style.fontSize = selSize + 'vw';
-      brandEl.style.color = brandCol;
-      brandEl.style.textShadow = '0 0 14px rgba(255,255,255,0.95), 0 2px 6px rgba(255,255,255,0.8)';
-      layer.appendChild(brandEl);
-
-      if (tag) {
-        var tagEl = document.createElement('div');
-        tagEl.className = 'overlay-tag';
-        tagEl.textContent = tag;
-        tagEl.style.fontFamily = "'" + selFont + "', sans-serif";
-        tagEl.style.fontSize = (selSize * 0.45) + 'vw';
-        tagEl.style.color = tagCol;
-        tagEl.style.textShadow = '0 0 10px rgba(255,255,255,0.9)';
-        layer.appendChild(tagEl);
-      }
-      display.appendChild(layer);
-    }
-
     var foot = document.createElement('div');
     foot.className = 'result-foot';
 
@@ -430,13 +467,11 @@ function showResults(urls, brand, tag, brandCol, tagCol) {
 
     var swatches = document.createElement('div');
     swatches.className = 'bg-swatches';
-
     var bgs = [
       { bg: '#ffffff', border: '1px solid #ddd' },
       { bg: '#111111', border: '1px solid #333' },
       { bg: 'repeating-conic-gradient(#ccc 0% 25%,#fff 0% 50%) 0 0/14px 14px', border: '1px solid #999' }
     ];
-
     (function(dispId) {
       bgs.forEach(function(s, si) {
         var sw = document.createElement('div');
@@ -457,26 +492,13 @@ function showResults(urls, brand, tag, brandCol, tagCol) {
     topRow.appendChild(swatches);
     foot.appendChild(topRow);
 
-    var dlRow = document.createElement('div');
-    dlRow.className = 'dl-row';
-
-    var dlBtn = document.createElement('button');
-    dlBtn.className = 'dl-btn';
-    dlBtn.textContent = 'Download PNG';
-
-    (function(u, idx, b, t2, bc, tc) {
-      dlBtn.onclick = function() { downloadLogo(u, idx, b, t2, bc, tc); };
-    })(url, i, brand, tag, brandCol, tagCol);
-
     var openBtn = document.createElement('a');
-    openBtn.className = 'dl-link';
+    openBtn.className = 'dl-btn';
     openBtn.href = url;
     openBtn.target = '_blank';
-    openBtn.textContent = 'Open Full Size';
+    openBtn.textContent = '🔗 Open Full Size & Save';
 
-    dlRow.appendChild(dlBtn);
-    dlRow.appendChild(openBtn);
-    foot.appendChild(dlRow);
+    foot.appendChild(openBtn);
     card.appendChild(display);
     card.appendChild(foot);
     container.appendChild(card);
@@ -485,84 +507,21 @@ function showResults(urls, brand, tag, brandCol, tagCol) {
 
   var nb = document.createElement('button');
   nb.className = 'new-btn';
-  nb.textContent = '+ Generate Another Logo';
+  nb.textContent = '+ Generate Another';
   nb.onclick = function() {
     container.style.display = 'none';
-    document.getElementById('prog').style.display = 'flex';
-    next(0);
+    document.getElementById('save-note').style.display = 'none';
+    document.getElementById('err-box').style.display = 'none';
+    if (currentMode === 'generate') {
+      document.getElementById('main-card').style.display = 'block';
+      document.getElementById('followup').style.display = 'none';
+      document.getElementById('prompt').value = '';
+    } else {
+      document.getElementById('mode-remix').style.display = 'block';
+    }
     window.scrollTo(0, 0);
   };
   container.appendChild(nb);
-}
-
-function downloadLogo(imgUrl, idx, brand, tag, brandCol, tagCol) {
-  var dim = 1200;
-  var c = document.createElement('canvas');
-  c.width = dim; c.height = dim;
-  var ctx = c.getContext('2d');
-  var img = new Image();
-  img.crossOrigin = 'anonymous';
-  img.onload = function() {
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, dim, dim);
-    var bpx = selSize * 12;
-    var tpx = Math.round(bpx * 0.45);
-    var ff = "'" + selFont + "', sans-serif";
-    var ix = 60, iy = 60, iw = dim - 120, ih = dim - 120;
-    if (brand) {
-      var th = bpx + 20 + (tag ? tpx + 16 : 0);
-      if (selPos === 'below') ih = dim - th - 140;
-      else if (selPos === 'above') { iy = th + 40; ih = dim - th - 140; }
-      else if (selPos === 'right') iw = Math.round(dim * 0.44);
-    }
-    ctx.drawImage(img, ix, iy, iw, ih);
-    if (brand) {
-      ctx.textBaseline = 'top';
-      if (selPos === 'below') {
-        var ty = iy + ih + 40;
-        ctx.font = '800 ' + bpx + 'px ' + ff;
-        ctx.fillStyle = brandCol; ctx.textAlign = 'center';
-        ctx.fillText(brand, dim / 2, ty);
-        if (tag) { ctx.font = '500 ' + tpx + 'px ' + ff; ctx.fillStyle = tagCol; ctx.fillText(tag, dim / 2, ty + bpx + 14); }
-      } else if (selPos === 'above') {
-        ctx.font = '800 ' + bpx + 'px ' + ff;
-        ctx.fillStyle = brandCol; ctx.textAlign = 'center';
-        ctx.fillText(brand, dim / 2, 50);
-        if (tag) { ctx.font = '500 ' + tpx + 'px ' + ff; ctx.fillStyle = tagCol; ctx.fillText(tag, dim / 2, 50 + bpx + 14); }
-      } else if (selPos === 'right') {
-        var tx = ix + iw + 50;
-        var total = bpx + (tag ? tpx + 16 : 0);
-        var ty2 = (dim - total) / 2;
-        ctx.font = '800 ' + bpx + 'px ' + ff;
-        ctx.fillStyle = brandCol; ctx.textAlign = 'left';
-        ctx.fillText(brand, tx, ty2);
-        if (tag) { ctx.font = '500 ' + tpx + 'px ' + ff; ctx.fillStyle = tagCol; ctx.fillText(tag, tx, ty2 + bpx + 14); }
-      } else if (selPos === 'centre') {
-        var total2 = bpx + (tag ? tpx + 16 : 0);
-        var ty3 = (dim - total2) / 2;
-        ctx.shadowColor = 'rgba(255,255,255,0.95)'; ctx.shadowBlur = 22;
-        ctx.font = '800 ' + bpx + 'px ' + ff;
-        ctx.fillStyle = brandCol; ctx.textAlign = 'center';
-        ctx.fillText(brand, dim / 2, ty3);
-        ctx.shadowBlur = 0;
-        if (tag) {
-          ctx.shadowColor = 'rgba(255,255,255,0.9)'; ctx.shadowBlur = 14;
-          ctx.font = '500 ' + tpx + 'px ' + ff;
-          ctx.fillStyle = tagCol;
-          ctx.fillText(tag, dim / 2, ty3 + bpx + 14);
-          ctx.shadowBlur = 0;
-        }
-      }
-    }
-    var a = document.createElement('a');
-    a.href = c.toDataURL('image/png');
-    a.download = (brand || 'logo').replace(/\s+/g, '-').toLowerCase() + '-' + (idx + 1) + '.png';
-    a.click();
-  };
-  img.onerror = function() {
-    alert('To save: tap Open Full Size then long-press the image to save it.');
-  };
-  img.src = imgUrl;
 }
 
 function addHistory(url) {
@@ -581,12 +540,12 @@ function showErr(msg) {
   var b = document.getElementById('err-box');
   b.style.display = 'block';
   var m = msg.toLowerCase();
-  if (m.includes('401') || m.includes('403') || m.includes('api key') || m.includes('invalid')) {
+  if (m.includes('401') || m.includes('403') || m.includes('invalid')) {
     b.innerHTML = '🔑 <strong>Invalid API key.</strong> Check it and tap Save again.';
   } else if (m.includes('429')) {
     b.innerHTML = '⏳ <strong>Too many requests.</strong> Wait 30 seconds and try again.';
-  } else if (m.includes('credit') || m.includes('quota') || m.includes('billing') || m.includes('insufficient')) {
-    b.innerHTML = '💳 <strong>Out of credits.</strong> Add more at <a href="https://platform.ideogram.ai/manage-api" target="_blank" style="color:#6c63ff">platform.openai.com</a>.';
+  } else if (m.includes('credit') || m.includes('quota') || m.includes('billing') || m.includes('insufficient') || m.includes('400')) {
+    b.innerHTML = '💳 <strong>Billing issue.</strong> Check your balance at <a href="https://ideogram.ai/manage-api" target="_blank" style="color:#6c63ff">ideogram.ai/manage-api</a>.';
   } else {
     b.innerHTML = '⚠️ ' + msg + '. Please try again.';
   }
